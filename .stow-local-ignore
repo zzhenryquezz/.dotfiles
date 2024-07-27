@@ -1,0 +1,12 @@
+# GIT
+
+\.git
+\.gitignore
+\.gitmodules
+
+# Documents
+
+^/README.*
+^/LICENSE.*
+^/COPYING
+
