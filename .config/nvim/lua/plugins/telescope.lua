@@ -17,17 +17,6 @@ return {
 			require("telescope").setup({
 				defaults = {
 					file_ignore_patterns = { ".git/" },
---					find_command = {
---						'ripgrep',
---						'--color=never',
---						'--no-heading',
---						'--with-filename',
---						'--line-number',
---						'--column',
---						'--smart-case',
---						'--ignore-file',
---						'.gitignore'
---					},
 				},
 				pickers = {
 					find_files = {
