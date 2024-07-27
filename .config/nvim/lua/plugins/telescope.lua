@@ -15,6 +15,25 @@ return {
 		"nvim-telescope/telescope-ui-select.nvim",
 		config = function()
 			require("telescope").setup({
+				defaults = {
+					file_ignore_patterns = { ".git/" },
+--					find_command = {
+--						'ripgrep',
+--						'--color=never',
+--						'--no-heading',
+--						'--with-filename',
+--						'--line-number',
+--						'--column',
+--						'--smart-case',
+--						'--ignore-file',
+--						'.gitignore'
+--					},
+				},
+				pickers = {
+					find_files = {
+						hidden = true
+					}
+				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown({}),
