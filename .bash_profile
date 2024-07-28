@@ -1,1 +1,1 @@
-source ~/profile.shared
+source ~/.profile.shared
