@@ -12,7 +12,8 @@ return {
 
 		neotree.setup({
 			--			close_if_last_window = true,
-			open_files_do_not_replace_filetypes = { "terminal", "trouble", "qf" },
+--			open_files_do_not_replace_filetypes = { "terminal", "trouble", "qf" },
+			autoselect_one = true,
 			filesystem = {
 				components = {
 					name = function(config, node, state)
@@ -34,6 +35,8 @@ return {
 					event = "file_opened",
 					handler = function(file_path)
 						require("neo-tree.command").execute({ action = "close" })
+
+						vim.cmd(':only')
 					end
 				},
 
