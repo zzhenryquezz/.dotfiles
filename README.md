@@ -14,7 +14,7 @@ apt install stow
 
 ## Installation
 
-First, check out the dotfiles repo in your $HOME directory using git
+First, check out the dotfiles repository in your $HOME directory using git
 
 ```
 git clone git@github.com:zzhenryquezz/.dotfiles.git
@@ -22,7 +22,7 @@ git clone git@github.com:zzhenryquezz/.dotfiles.git
 cd dotfiles
 ```
 
-Then use GNU stow to create symlinks
+Then use GNU stow to create symbolic links
 
 ```
 $ stow .
