@@ -24,7 +24,7 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
-		{ import = "plugins" },
+        { import = "plugins" },
 	},
 	install = { colorscheme = { "habamax" } },
 	checker = { enabled = true, notify = false },

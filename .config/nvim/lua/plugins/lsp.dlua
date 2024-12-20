@@ -25,8 +25,20 @@ return {
         config = function()
             local util = require 'lspconfig.util'
 
+            local function get_global_node_modules_path() 
+                local handle = io.popen("npm root -g")
+                
+                local global_node_modules = handle:read("*a"):gsub("%s+", "")
+
+                handle:close()
+
+                return global_node_modules
+            end
+            
+
             local function get_typescript_server_path(root_dir)
-                local global_ts = '/home/henryque/.asdf/installs/nodejs/20.15.0/lib/node_modules/typescript/lib'
+                local global_ts = util.path.join(get_global_node_modules_path(), 'typescript', 'lib')
+
                 local found_ts = ''
                 local function check_dir(path)
                     found_ts = util.path.join(path, 'node_modules', 'typescript', 'lib')
@@ -54,7 +66,6 @@ return {
 
             lspconfig.tsserver.setup({
                 root_dir = function(fname)
-                    local util = require("lspconfig.util")
                     return util.root_pattern(".git")(fname)
                         or util.root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
                 end,
@@ -63,8 +74,7 @@ return {
                     plugins = {
                         {
                             name = "@vue/typescript-plugin",
-                            location =
-                            "/home/henryque/.asdf/installs/nodejs/20.15.0/lib/node_modules/@vue/typescript-plugin",
+                            location = util.path.join(get_global_node_modules_path(), "node_modules/@vue/typescript-plugin"),
                             languages = { "javascript", "typescript", "vue" },
                         },
                     },
@@ -86,7 +96,6 @@ return {
             lspconfig.eslint.setup({
                 capabilities,
                 root_dir = function(fname)
-                    local util = require("lspconfig.util")
                     return util.root_pattern(".git")(fname)
                         or util.root_pattern("package.json")(fname)
                 end,
