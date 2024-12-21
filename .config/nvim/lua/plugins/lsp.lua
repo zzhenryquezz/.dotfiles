@@ -25,16 +25,16 @@ return {
         config = function()
             local util = require 'lspconfig.util'
 
-            local function get_global_node_modules_path() 
+            local function get_global_node_modules_path()
                 local handle = io.popen("npm root -g")
-                
+
                 local global_node_modules = handle:read("*a"):gsub("%s+", "")
 
                 handle:close()
 
                 return global_node_modules
             end
-            
+
 
             local function get_typescript_server_path(root_dir)
                 local global_ts = util.path.join(get_global_node_modules_path(), 'typescript', 'lib')
@@ -74,7 +74,8 @@ return {
                     plugins = {
                         {
                             name = "@vue/typescript-plugin",
-                            location = util.path.join(get_global_node_modules_path(), "node_modules/@vue/typescript-plugin"),
+                            location = util.path.join(get_global_node_modules_path(),
+                                "node_modules/@vue/typescript-plugin"),
                             languages = { "javascript", "typescript", "vue" },
                         },
                     },
@@ -106,6 +107,22 @@ return {
                     })
                 end,
             })
+
+            lspconfig.yamlls.setup({
+                capabilities = capabilities,
+                on_attach = function(client, bufnr)
+                    client.server_capabilities.documentFormattingProvider = true
+                end,
+                settings = {
+                    yaml = {
+                        format = {
+                            enable = false,
+                        },
+                    },
+
+                },
+            })
+
 
             vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})

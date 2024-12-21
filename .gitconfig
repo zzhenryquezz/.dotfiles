@@ -1,3 +1,5 @@
 [user]
 	email = henrique@sidekick-coder.com
 	name = Henrique
+[init]
+	defaultBranch = main
