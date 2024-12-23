@@ -110,16 +110,21 @@ return {
 
             lspconfig.yamlls.setup({
                 capabilities = capabilities,
-                on_attach = function(client, bufnr)
+                on_attach = function(client)
                     client.server_capabilities.documentFormattingProvider = true
                 end,
                 settings = {
                     yaml = {
                         format = {
-                            enable = false,
+                            enable = true,
+                        },
+                        schemaStore = {
+                            enable = true,
                         },
                     },
-
+                    editor = {
+                        tabSize = 4,
+                    },
                 },
             })
 
@@ -129,6 +134,13 @@ return {
             vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
             vim.keymap.set({ "n", "v" }, "<leader>cf", vim.lsp.buf.format, {})
             vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
+		    vim.keymap.set("n", "<leader>gf", function()
+                vim.lsp.buf.format({
+                    formatting_options = {
+                        tabSize = vim.bo.tabstop,
+                    },
+                })
+            end)
         end,
     },
 }
