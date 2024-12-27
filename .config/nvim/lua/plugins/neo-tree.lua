@@ -1,39 +1,46 @@
 return {
-	"nvim-neo-tree/neo-tree.nvim",
-	branch = "v3.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
-		"MunifTanjim/nui.nvim",
-	},
-	config = function()
-		local neotree = require("neo-tree")
-		local components = require("neo-tree.sources.common.components")
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+    },
+    config = function()
+        local neotree = require("neo-tree")
+        local components = require("neo-tree.sources.common.components")
 
-		neotree.setup({
+        neotree.setup({
             close_if_last_window = true,
-			autoselect_one = true,
-			filesystem = {
-				follow_current_file = {
-					enabled = true,
+            autoselect_one = true,
+            window = {
+                position = "current",
+            },
+            source_selector = {
+                winbar = true,
+                statusline = true
+            },
+            filesystem = {
+                follow_current_file = {
+                    enabled = true,
                     leave_dirs_open = true
-				},
-				components = {
-					name = function(config, node, state)
-						local name = components.name(config, node, state)
-						if node:get_depth() == 1 then
-							name.text = vim.fs.basename(vim.loop.cwd() or "")
-						end
-						return name
-					end,
-				},
-				filtered_items = {
-					hide_dotfiles = false,
-					visible = true,
-				},
-			},
-		})
+                },
+                components = {
+                    name = function(config, node, state)
+                        local name = components.name(config, node, state)
+                        if node:get_depth() == 1 then
+                            name.text = vim.fs.basename(vim.loop.cwd() or "")
+                        end
+                        return name
+                    end,
+                },
+                filtered_items = {
+                    hide_dotfiles = false,
+                    visible = true,
+                },
+            },
+        })
 
-		vim.keymap.set("n", "<C-n>", ":Neotree reveal right<CR>")
-	end,
+        vim.keymap.set("n", "<C-n>", ":Neotree reveal<CR>")
+    end,
 }

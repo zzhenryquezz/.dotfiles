@@ -15,3 +15,9 @@ vim.keymap.set("n", "<c-u>", '<c-u>zz')
 
 vim.keymap.set("n", "<PageUp>", "<c-u>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "<PageDown>", "<c-d>zz", { noremap = true, silent = true })
+
+-- disable arrow keys 
+vim.keymap.set("n", "<Up>", "<nop>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Down>", "<nop>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Left>", "<nop>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Right>", "<nop>", { noremap = true, silent = true })
