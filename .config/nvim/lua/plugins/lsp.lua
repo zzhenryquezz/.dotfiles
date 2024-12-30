@@ -12,7 +12,7 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "jsonls",
-                    "tsserver",
+                    "ts_ls",
                     "html",
                     "volar",
                 },
@@ -64,7 +64,7 @@ return {
                 capabilities = capabilities,
             })
 
-            lspconfig.tsserver.setup({
+            lspconfig.ts_ls.setup({
                 root_dir = function(fname)
                     return util.root_pattern(".git")(fname)
                         or util.root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
