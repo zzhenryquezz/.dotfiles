@@ -15,6 +15,9 @@ return {
                     "ts_ls",
                     "html",
                     "volar",
+                    "eslint",
+                    "yamlls",
+                    "terraformls",
                 },
                 automatic_installtion = true,
             })
@@ -128,6 +131,9 @@ return {
                 },
             })
 
+            lspconfig.terraformls.setup({
+                capabilities = capabilities,
+            })
 
             vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})

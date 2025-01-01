@@ -39,6 +39,14 @@ return {
                     visible = true,
                 },
             },
+            event_handlers = {
+                {
+                    event = "file_open_requested",
+                    handler = function() 
+                        vim.cmd("Neotree close") 
+                    end
+                }
+            }
         })
 
         vim.keymap.set("n", "<C-n>", ":Neotree reveal<CR>")
