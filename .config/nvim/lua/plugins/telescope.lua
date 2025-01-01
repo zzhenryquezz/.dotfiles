@@ -14,23 +14,37 @@ return {
     {
         "nvim-telescope/telescope-ui-select.nvim",
         config = function()
-            require("telescope").setup({
+            local telescope = require("telescope")
+            local telescopeConfig = require("telescope.config")
+
+            local vimgrep_arguments = { table.unpack(telescopeConfig.values.vimgrep_arguments) }
+
+            table.insert(vimgrep_arguments, "--hidden")
+            table.insert(vimgrep_arguments, "--glob")
+            table.insert(vimgrep_arguments, "!**/.git/*")
+
+            telescope.setup({
                 defaults = {
-                    file_ignore_patterns = { ".git/", "node_modules/" },
+                    vimgrep_arguments = vimgrep_arguments,
                     mappings = {
                         n = {
                             ["q"] = require("telescope.actions").close,
                             ["d"] = require("telescope.actions").delete_buffer,
                         },
-                    },
+                    }, 
                 },
                 pickers = {
                     find_files = {
-                        hidden = true,
+                        find_command = {
+                            "rg",
+                            "--files",
+                            "--hidden",
+                            "--no-ignore",
+                            "--glob",
+                            "!**/.git/*",
+                        }
                     },
-                    buffers = {
-                        initial_mode = "normal",
-                    },
+                    buffers = {},
                     grep_string = {
                         additional_args = { "--hidden" }
                     },
