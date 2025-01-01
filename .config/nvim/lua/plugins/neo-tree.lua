@@ -21,6 +21,7 @@ return {
                 statusline = true
             },
             filesystem = {
+
                 follow_current_file = {
                     enabled = true,
                     leave_dirs_open = true
@@ -37,6 +38,9 @@ return {
                 filtered_items = {
                     hide_dotfiles = false,
                     visible = true,
+                    never_show = {
+                        '.git'
+                    },
                 },
             },
             event_handlers = {
