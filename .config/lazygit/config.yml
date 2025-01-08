@@ -1,3 +1,34 @@
 git:
-  paging:
-    useConfig: true
+    paging:
+        useConfig: true
+
+customCommands:
+    - key: "r"
+      context: "files"
+      description: "Commit using convetion commints. Ex: refactor: change variable name"
+      prompts:
+          - type: "menu"
+            title: "Type"
+            key: "CommitType"
+            options:
+                - name: "feat"
+                  description: "New feature"
+                  value: "feat"
+
+                - name: "refactor"
+                  description: "Code change that neither fixes a bug nor adds a feature"
+                  value: "refactor"
+
+                - name: "fix"
+                  description: "Bug fix"
+                  value: "fix"
+
+          - type: "input"
+            title: "Scope"
+            key: "CommitScope"
+
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+
+      command: "git commit -m {{if .Form.CommitScope}} '{{.Form.CommitType}}({{.Form.CommitScope}}): {{.Form.CommitMessage}}' {{else}} '{{.Form.CommitType}}: {{.Form.CommitMessage}}' {{end}}"
