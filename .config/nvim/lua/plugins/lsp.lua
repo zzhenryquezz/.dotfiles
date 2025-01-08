@@ -99,10 +99,7 @@ return {
 
             lspconfig.eslint.setup({
                 capabilities,
-                root_dir = function(fname)
-                    return util.root_pattern(".git")(fname)
-                        or util.root_pattern("package.json")(fname)
-                end,
+                root_dir = util.root_pattern("eslint.config.js", "eslint.config.mjs"),
                 on_attach = function(_client, bufnr)
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = bufnr,
