@@ -3,7 +3,7 @@ git:
         useConfig: true
 
 customCommands:
-    - key: "r"
+    - key: "C"
       context: "files"
       description: "Commit using convetion commints. Ex: refactor: change variable name"
       prompts:
@@ -32,3 +32,72 @@ customCommands:
             key: "CommitMessage"
 
       command: "git commit -m {{if .Form.CommitScope}} '{{.Form.CommitType}}({{.Form.CommitScope}}): {{.Form.CommitMessage}}' {{else}} '{{.Form.CommitType}}: {{.Form.CommitMessage}}' {{end}}"
+
+    - key: "r"
+      context: "files"
+      description: "Create a refactor commit"
+      prompts:
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+      command: 'git commit -m "refactor: {{.Form.CommitMessage}}"'
+
+    - key: "R"
+      context: "files"
+      description: "Create a refactor commit with scope"
+      prompts:
+          - type: "input"
+            title: "Scope"
+
+            key: "CommitScope"
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+
+      command: 'git commit -m "refactor({{.Form.CommitScope}}): {{.Form.CommitMessage}}"'
+
+    - key: "f"
+      context: "files"
+      description: "Create a feat commit"
+      prompts:
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+      command: 'git commit -m "feat: {{.Form.CommitMessage}}"'
+
+    - key: "F"
+      context: "files"
+      description: "Create a fix commit with scope"
+      prompts:
+          - type: "input"
+            title: "Scope"
+            key: "CommitScope"
+
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+
+      command: 'git commit -m "feat({{.Form.CommitScope}}): {{.Form.CommitMessage}}"'
+
+    - key: "b"
+      context: "files"
+      description: "Create a bug commit"
+      prompts:
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+      command: 'git commit -m "bug: {{.Form.CommitMessage}}"'
+
+    - key: "B"
+      context: "files"
+      description: "Create a bug commit with scope"
+      prompts:
+          - type: "input"
+            title: "Scope"
+            key: "CommitScope"
+
+          - type: "input"
+            title: "Message"
+            key: "CommitMessage"
+
+      command: 'git commit -m "bug({{.Form.CommitScope}}): {{.Form.CommitMessage}}"'
