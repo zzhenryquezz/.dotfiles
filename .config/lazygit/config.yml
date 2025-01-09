@@ -86,7 +86,7 @@ customCommands:
           - type: "input"
             title: "Message"
             key: "CommitMessage"
-      command: 'git commit -m "bug: {{.Form.CommitMessage}}"'
+      command: 'git commit -m "fix: {{.Form.CommitMessage}}"'
 
     - key: "B"
       context: "files"
@@ -100,4 +100,4 @@ customCommands:
             title: "Message"
             key: "CommitMessage"
 
-      command: 'git commit -m "bug({{.Form.CommitScope}}): {{.Form.CommitMessage}}"'
+      command: 'git commit -m "fix({{.Form.CommitScope}}): {{.Form.CommitMessage}}"'
