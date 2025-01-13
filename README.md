@@ -25,5 +25,5 @@ cd dotfiles
 Then use GNU stow to create symbolic links
 
 ```
-$ stow .
+stow .
 ```
