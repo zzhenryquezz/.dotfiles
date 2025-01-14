@@ -5,15 +5,9 @@ PATH="$PATH:/snap/bin"
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 export EDITOR=nvim
 
-eval "$(tmuxifier init -)"
-
-alias tns='tmuxifier new-session'
-alias tes='tmuxifier edit-session'
-alias tls='tmuxifier load-session'
-alias tks='tmuxifier kill-session'
-
 # Aliases
 alias vim='nvim'
+alias vi='nvim' 
 
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
