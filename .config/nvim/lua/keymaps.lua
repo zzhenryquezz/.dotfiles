@@ -1,7 +1,4 @@
-vim.keymap.set("t", "<Esc>", '<C-\\><C-n><CR>')
 vim.keymap.set("i", "<c-s>", '<Esc>:w<cr>')
-
-
 
 -- toggle relative numbers
 vim.keymap.set("n", "<leader>rn", function()
@@ -21,3 +18,5 @@ vim.keymap.set("n", "<Up>", "<nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Down>", "<nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Left>", "<nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Right>", "<nop>", { noremap = true, silent = true })
+
+
