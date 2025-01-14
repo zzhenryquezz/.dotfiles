@@ -3,9 +3,12 @@ return {
         "MeanderingProgrammer/render-markdown.nvim",
         dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
         config = function()
+
             require("render-markdown").setup({})
 
-            vim.keymap.nnoremap({ "<leader>rm", "<cmd>RenderMarkdown<CR>", desc = "Render markdown" })
+            vim.keymap.set("n", "<leader>rm", function()
+                require("render-markdown").toggle()
+            end, { noremap = true, silent = true })
         end,
     },
     {
@@ -34,7 +37,7 @@ return {
                 disable_filename = 0,
             }
 
-            vim.keymap.set('n', '<leader>mp', '<Plug>MarkdownPreviewToggle', { desc = '[M]arkdown [P]review'})
+            vim.keymap.set("n", "<leader>mp", "<Plug>MarkdownPreviewToggle", { desc = "[M]arkdown [P]review" })
         end,
     },
 }
