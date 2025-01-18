@@ -12,3 +12,4 @@ notion
 geforce-experience
 llvm
 zig
+nerd-fonts-noto
