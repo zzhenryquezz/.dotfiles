@@ -1,0 +1,20 @@
+- name: tmux
+  become: true
+  apt:
+      name: tmux
+      state: present
+      update_cache: yes
+
+- name: tmuxifier
+  become: true
+  become_user: "{{ user_name }}"
+  git:
+      repo: https://github.com/jimeh/tmuxifier.git
+      dest: "~/.tmuxifier"
+
+- name: tpm
+  become: true
+  become_user: "{{ user_name }}"
+  git:
+      repo: https://github.com/tmux-plugins/tpm
+      dest: "~/.tmux/plugins/tpm"

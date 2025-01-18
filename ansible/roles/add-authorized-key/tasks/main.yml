@@ -1,0 +1,7 @@
+
+- name: authorized key
+  become: true
+  authorized_key: 
+    user: "{{ user_name }}"
+    state: present 
+    key: "{{ key }}"

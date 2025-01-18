@@ -1,0 +1,16 @@
+- name: ensure .ssh directory exists
+  become: true
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: add private key
+  become: true
+  copy:
+    src: "{{ source_filename }}"
+    dest: "/home/{{ user_name }}/.ssh/{{ key_name | default('id_rsa') }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0600

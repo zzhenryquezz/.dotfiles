@@ -1,0 +1,39 @@
+- name: check
+  shell: dpkg-query -W -f '${db:Status-Status} ${Package}\n' 'amazon-efs-utils' | awk '$1 != "not-installed" {print}'
+  register: efs_utils
+  check_mode: false
+  changed_when: false
+  failed_when: false
+
+- when:
+      - "'installed amazon-efs-utils' not in efs_utils.stdout"
+      - ansible_facts['os_family'] == 'Debian'
+  block:
+      - name: dependencies
+        become: true
+        apt:
+            state: present
+            name:
+                - git
+                - binutils
+                - rustc
+                - cargo
+                - pkg-config
+                - libssl-dev
+                - gettext
+
+      - name: clone
+        git:
+            repo: https://github.com/aws/efs-utils
+            dest: /tmp/efs-utils
+
+      - name: build
+        shell: ./build-deb.sh
+        args:
+            chdir: /tmp/efs-utils
+
+      - name: install
+        become: true
+        args:
+            chdir: /tmp/efs-utils
+        shell: apt install -y ./build/amazon-efs-utils*deb

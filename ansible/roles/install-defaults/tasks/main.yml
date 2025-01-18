@@ -1,0 +1,13 @@
+- name: apt
+  become: true
+  when: ansible_facts['os_family'] == 'Debian'
+  apt:
+      state: latest
+      name:
+          - build-essential
+          - curl
+          - lsd
+          - ripgrep
+          - fzf
+          - acl
+

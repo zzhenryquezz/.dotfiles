@@ -1,0 +1,10 @@
+
+- name: known_hosts
+  become: true
+  known_hosts:
+   name: "{{ host }}"
+   state: present
+   key: "{{ lookup('pipe', 'ssh-keyscan {{ host }}') }}"
+   path: "/home/{{ user_name }}/.ssh/known_hosts"
+ 
+

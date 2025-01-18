@@ -1,0 +1,23 @@
+- name: check
+  become: true
+  register: check_zsh
+  stat:
+      path: /bin/zsh
+
+- when: check_zsh.stat.exists == False
+  block:
+      - name: install zsh
+        become: true
+        package:
+            name: zsh
+            state: present
+
+      - name: load
+        become: true
+        become_user: "{{ user_name }}"
+        shell: |
+            source ~/.zshrc
+            exit 0
+        args:
+            executable: /bin/zsh
+            chdir: /home/{{ user_name }}

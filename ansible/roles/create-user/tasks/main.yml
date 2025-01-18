@@ -1,0 +1,11 @@
+
+- name: create user
+  become: true
+  user:
+    name: "{{ user_name }}" 
+    state: present
+    groups: "{{ user_groups | default('sudo') }}"
+    password: "{{ user_password | password_hash('sha512') }}"
+    update_password: on_create
+    createhome: yes
+    shell: "{{ user_shell | default('/bin/bash') }}"

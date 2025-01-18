@@ -1,0 +1,31 @@
+- name: check
+  register: dotfiles
+  become: true 
+  become_user: "{{ user_name }}"
+  stat:
+      path: /home/{{ user_name }}/.dotfiles
+
+- when: dotfiles.stat.exists == False
+  block:
+      - name: install stow
+        become: true
+        apt:
+            name: stow
+            state: present
+            update_cache: true
+
+      - name: .dotfiles
+        become: true
+        become_user: "{{ user_name }}"
+        git:
+            repo: git@github.com:zzhenryquezz/.dotfiles.git
+            dest: /home/{{ user_name }}/.dotfiles
+
+      - name: stow .dotfiles
+        become: true
+        become_user: "{{ user_name }}"
+        shell: |
+            stow . --adopt
+            git restore .
+        args:
+            chdir: /home/{{ user_name }}/.dotfiles

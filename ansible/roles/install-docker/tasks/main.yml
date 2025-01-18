@@ -1,0 +1,41 @@
+- name: check
+  shell: dpkg-query -W -f '${db:Status-Status} ${Package}\n' 'docker-ce' | awk '$1 != "not-installed" {print}'
+  register: check_docker
+  check_mode: false
+  changed_when: false
+  failed_when: false
+
+- when:
+      - "'installed' not in check_docker.stdout"
+      - ansible_facts['os_family'] == 'Debian'
+  become: true
+  block:
+      - name: dependencies
+        apt:
+            state: present
+            name:
+                - ca-certificates
+                - curl
+      - name: key
+        shell: |
+            install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            chmod a+r /etc/apt/keyrings/docker.asc
+            echo \
+              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+              $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+              sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+      - name: update
+        apt:
+            update_cache: yes
+
+      - name: install
+        apt:
+            state: present
+            name:
+                - docker-ce
+                - docker-ce-cli
+                - containerd.io
+                - docker-buildx-plugin
+                - docker-compose-plugin

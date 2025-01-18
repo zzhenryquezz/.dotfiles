@@ -1,0 +1,43 @@
+- name: check
+  become: true
+  become_user: "{{ user_name }}"
+  register: check_asdf
+  stat:
+      path: ~/.asdf
+
+- when: check_asdf.stat.exists == False
+  block:
+      - name: asdf
+        become: true
+        become_user: "{{ user_name }}"
+        git:
+            repo: https://github.com/asdf-vm/asdf.git
+            dest: ~/.asdf
+            version: v0.15.0
+
+      - name: plugins
+        become: true
+        become_user: "{{ user_name }}"
+        args:
+            executable: /bin/bash
+        shell: |
+            source ~/.asdf/asdf.sh
+            asdf plugin-add nodejs
+
+      - name: languages
+        become: true
+        become_user: "{{ user_name }}"
+        args:
+            executable: /bin/bash
+        shell: |
+            source ~/.asdf/asdf.sh
+            asdf install nodejs 23.5.0
+
+      - name: globals
+        become: true
+        become_user: "{{ user_name }}"
+        args:
+            executable: /bin/bash
+        shell: |
+            source ~/.asdf/asdf.sh
+            asdf global nodejs 23.5.0

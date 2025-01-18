@@ -1,0 +1,53 @@
+- name: check
+  shell: dpkg-query -W -f '${db:Status-Status} ${Package}\n' 'neovim' | awk '$1 != "not-installed" {print}'
+  register: check_nvim
+  check_mode: false
+  changed_when: false
+  failed_when: false
+
+- when:
+      - "'installed' not in check_nvim.stdout"
+      - ansible_facts['os_family'] == 'Debian'
+  block:
+      - name: nvim
+        become: true
+        apt:
+            name: neovim
+            state: present
+            update_cache: true
+
+      - name: npm
+        become: true
+        become_user: "{{ user_name }}"
+        args:
+            executable: /bin/bash
+        shell: |
+            source ~/.asdf/asdf.sh
+            npm install -g \
+              typescript \ 
+              typescript-language-server \ 
+              @vue/typescript-plugin \
+              @vue/language-server \
+              vscode-langservers-extracted \
+              yaml-language-server
+
+      - name: github-copilot
+        become: true
+        become_user: "{{ user_name }}"
+        when: github_copilot_config_filename is defined
+        copy:
+            src: "{{ github_copilot_config_filename }}"
+            dest: ~/.config
+            owner: "{{ user_name }}"
+            group: "{{ user_name }}"
+            mode: 0755
+
+      - name: lazy-sync
+        become: true
+        become_user: "{{ user_name }}"
+        shell: "nvim --headless '+Lazy! sync' +qa"
+
+      - name: treesitter
+        become: true
+        become_user: "{{ user_name }}"
+        shell: "nvim --headless '+TSUpdate' +qa"
