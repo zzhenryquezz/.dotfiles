@@ -1,0 +1,12 @@
+googlechrome
+vscode
+winrar
+git
+nodejs
+spotify
+neovim
+lghub
+logitech-options
+steam
+notion
+geforce-experience
