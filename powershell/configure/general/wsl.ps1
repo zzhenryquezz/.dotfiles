@@ -1,6 +1,8 @@
 # Enable the WSL feature
-Write-Host "Enabling WSL..."
-wsl --install -y
+Write-Host "Install WSL..."
+$wslInstall = Start-Process -FilePath wsl.exe -ArgumentList "--install -d Ubuntu --no-launch" -Wait -PassThru
+
+$wslInstall.WaitForExit()
 
 # Set WSL version to 2
 Write-Host "Setting WSL version to 2..."
@@ -20,3 +22,8 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All -NoRest
 
 # Prompt for a restart to apply changes
 Write-Host "WSL has been enabled. Please restart your computer to apply the changes." -ForegroundColor Green
+
+
+$ubuntuInstall = Start-Process -FilePath ubuntu.exe -Wait -PassThru
+
+$ubuntuInstall.WaitForExit()
