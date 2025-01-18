@@ -1,28 +1,30 @@
 - name: setup-ubuntu
   hosts: "{{ target | default('localhost') }}"
+  vars_files:
+    - ../vars.yml
   roles:
-      - role: update-packages 
-
+      - role: create-dotfiles-links
+    
       - role: install-defaults
 
       - role: install-lazygit
 
       - role: add-known-host
-        user_name: "{{ user_name }}"
-        host: "github.com"
 
       - role: install-zsh
-        user_name: "{{ user_name }}"
 
       - role: install-asdf
-        user_name: "{{ user_name }}"
 
       - role: install-nvim
-        user_name: "{{ user_name }}"
-        github_copilot_config_filename: "{{ nvim.github_copilot_config_filename | default(omit) }}"
-        npm_executable: "/home/{{ user_name }}/.asdf/installs/nodejs/23.5.0/bin/npm"
 
       - role: install-tmux
-        user_name: "{{ user_name }}"
 
       - role: install-docker
+
+  post_tasks:
+    - name: default-shell
+      become: true
+      user:
+        name: "{{ user_name }}"
+        shell: /usr/bin/zsh
+        update_password: on_create

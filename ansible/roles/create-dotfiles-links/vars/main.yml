@@ -1,0 +1,13 @@
+links:
+  - .bash_profile
+  - .bashrc
+  - .gitconfig
+  - .p10k.zsh
+  - .profile.shared
+  - .terraformrc
+  - .tmux.conf
+  - .zprofile
+  - .zshrc
+  - .config/lazygit
+  - .config/lsd
+  - .config/nvim

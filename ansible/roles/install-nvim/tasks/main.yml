@@ -29,18 +29,8 @@
               @vue/typescript-plugin \
               @vue/language-server \
               vscode-langservers-extracted \
-              yaml-language-server
-
-      - name: github-copilot
-        become: true
-        become_user: "{{ user_name }}"
-        when: github_copilot_config_filename is defined
-        copy:
-            src: "{{ github_copilot_config_filename }}"
-            dest: ~/.config
-            owner: "{{ user_name }}"
-            group: "{{ user_name }}"
-            mode: 0755
+              yaml-language-server \
+              yarn
 
       - name: lazy-sync
         become: true

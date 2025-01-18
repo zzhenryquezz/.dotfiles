@@ -1,10 +1,18 @@
+- name: ssh-folder
+  become: true
+  file:
+    state: directory
+    path: "/home/{{ user_name }}/.ssh"
+    mode: 0700
 
 - name: known_hosts
   become: true
   known_hosts:
-   name: "{{ host }}"
-   state: present
-   key: "{{ lookup('pipe', 'ssh-keyscan {{ host }}') }}"
-   path: "/home/{{ user_name }}/.ssh/known_hosts"
+    name: "{{ item }}"
+    state: present
+    key: "{{ lookup('pipe', 'ssh-keyscan {{ item }}') }}"
+    path: "/home/{{ user_name }}/.ssh/known_hosts"
+  loop: "{{ known_hosts | default(['github.com']) }}"
+
  
 

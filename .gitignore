@@ -3,3 +3,6 @@
 !.config/nvim
 !.config/lsd
 !.config/lazygit
+
+ansible/*vars.yml
+powershell/*vars.ps1

@@ -1,0 +1,22 @@
+- name: .config
+  file:
+    state: directory
+    path: "/home/{{ user_name }}/.config"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: remove
+  file:
+    state: absent
+    path: "/home/{{ user_name }}/{{ item }}"
+  loop: "{{ links }}"
+
+  
+- name: link
+  file:
+    state: link
+    src: "{{ DOTFILES_PATH }}/{{ item }}"
+    dest: "/home/{{ user_name }}/{{ item }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+  loop: "{{ links }}"
