@@ -10,4 +10,5 @@
           - ripgrep
           - fzf
           - acl
+          - luarocks
 

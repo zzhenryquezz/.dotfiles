@@ -1,14 +1,12 @@
 return {
-    {
-        "williamboman/mason.nvim",
-        config = function()
-            require("mason").setup()
-        end,
-    },
+    { "williamboman/mason.nvim" },
+    { "WhoIsSethDaniel/mason-tool-installer" },
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-            require("mason-lspconfig").setup({
+            require("mason").setup()
+            require("mason-lspconfig").setup()
+            require('mason-tool-installer').setup({
                 ensure_installed = {
                     "lua_ls",
                     "jsonls",
@@ -18,9 +16,11 @@ return {
                     "eslint",
                     "yamlls",
                     "terraformls",
+                    "stylua",
+                    "markdownlint"
                 },
-                automatic_installtion = true,
             })
+
         end,
     },
     {
