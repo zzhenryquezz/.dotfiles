@@ -3,11 +3,10 @@ return {
 	version = "v0.9.2",
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter.install").prefer_git = true
-		require("nvim-treesitter.install").compilers = {"zig", "clang", "gcc", "zig" } -- List your available compilers
+        --		require("nvim-treesitter.install").prefer_git = true
+		-- require("nvim-treesitter.install").compilers = {"zig", "clang", "gcc"} -- List your available compilers
 
 		local configs = require("nvim-treesitter.configs")
-		vim.opt.makeprg = "clang"
 
 		configs.setup({
 			auto_install = true,
