@@ -28,6 +28,9 @@ return {
         config = function()
             local util = require 'lspconfig.util'
 
+            -- import all the lsp servers in languages folders  
+            require('lsp.servers')
+
             local function get_global_node_modules_path()
                 local handle = io.popen("npm root -g")
 
@@ -59,9 +62,9 @@ return {
             local lspconfig = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-            lspconfig.lua_ls.setup({
-                capabilities = capabilities,
-            })
+            -- lspconfig.lua_ls.setup({
+            --     capabilities = capabilities,
+            -- })
 
             lspconfig.jsonls.setup({
                 capabilities = capabilities,
@@ -99,7 +102,7 @@ return {
 
             lspconfig.eslint.setup({
                 capabilities,
-                root_dir = util.root_pattern("eslint.config.js", "eslint.config.mjs"),
+                root_dir = util.root_pattern("eslint.config.js", "eslint.config.mjs", ".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yaml", ".eslintrc.yml"),
                 on_attach = function(_client, bufnr)
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = bufnr,

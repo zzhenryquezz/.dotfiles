@@ -51,8 +51,7 @@
     context                 # user@host
     dir                       # current directory
     vcs                       # git status
-    # command_execution_time  # previous command duration
-    # virtualenv              # python virtual environment
+    newline
     prompt_char               # prompt symbol
   )
 
@@ -92,7 +91,9 @@
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$grey
   # Don't show Python version.
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
+
 
   # Blue current directory.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=$blue
