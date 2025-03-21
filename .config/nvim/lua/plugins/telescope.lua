@@ -23,10 +23,12 @@ return {
 
 			local vimgrep_arguments = { table.unpack(telescopeConfig.values.vimgrep_arguments) }
 
+            local ignore_patters = "!{**/.git/*,**/node_modules/*,**/__pycache__/*,**/.venv/*}"
+
 			table.insert(vimgrep_arguments, "--hidden")
 			table.insert(vimgrep_arguments, "--glob")
             -- ignore .git and node_modules
-			table.insert(vimgrep_arguments, "!{**/.git/*,**/node_modules/*}")
+			table.insert(vimgrep_arguments, ignore_patters)
 
 			telescope.setup({
 				defaults = {
@@ -46,7 +48,7 @@ return {
 							"--hidden",
 							"--no-ignore",
 							"--glob",
-                            "!{**/.git/*,**/node_modules/*}",
+                            ignore_patters,
 						},
 					},
 					buffers = {},

@@ -4,7 +4,10 @@ return {
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
-            require("mason").setup()
+            require("mason").setup({
+                -- PATH = "prepend"
+            })
+
             require("mason-lspconfig").setup()
             require('mason-tool-installer').setup({
                 ensure_installed = {
@@ -17,7 +20,7 @@ return {
                     "yamlls",
                     "terraformls",
                     "stylua",
-                    "markdownlint"
+                    "pyright"
                 },
             })
 
