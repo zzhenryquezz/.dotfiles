@@ -3,6 +3,7 @@
 !.config/nvim
 !.config/lsd
 !.config/lazygit
+!.config/starship
 
 ansible/*vars.yml
 powershell/*vars.ps1
