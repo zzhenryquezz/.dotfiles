@@ -5,6 +5,7 @@ local util = require("lspconfig.util")
 lspconfig.eslint.setup({
 	capabilities,
 	root_dir = util.root_pattern(
+		"eslint.config.ts",
 		"eslint.config.js",
 		"eslint.config.mjs",
 		".eslintrc",

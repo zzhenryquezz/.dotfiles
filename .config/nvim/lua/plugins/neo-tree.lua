@@ -16,12 +16,7 @@ return {
             window = {
                 position = "current",
             },
-            source_selector = {
-                winbar = true,
-                statusline = true
-            },
             filesystem = {
-
                 follow_current_file = {
                     enabled = true,
                     leave_dirs_open = true
