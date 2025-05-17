@@ -1,7 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	version = "v0.9.2",
 	build = ":TSUpdate",
+    branch = "master",
 	config = function()
         --		require("nvim-treesitter.install").prefer_git = true
 		-- require("nvim-treesitter.install").compilers = {"zig", "clang", "gcc"} -- List your available compilers
