@@ -15,12 +15,13 @@ return {
                     "jsonls",
                     "ts_ls",
                     "html",
-                    "volar",
+                    "vue_ls",
                     "eslint",
                     "yamlls",
                     "terraformls",
                     "stylua",
-                    "pyright"
+                    "pyright",
+                    "intelephense",
                 },
             })
 

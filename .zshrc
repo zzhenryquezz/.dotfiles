@@ -18,7 +18,6 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
 
 # plugins
-# zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
@@ -37,16 +36,27 @@ zinit snippet OMZP::command-not-found
 # Load completions
 autoload -U compinit && compinit
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+function autosuggest-accept-word() {
+  local suggestion="${ZSH_AUTOSUGGEST_BUFFER:-}"
+  if [[ -n "$suggestion" ]]; then
+    local first_word="${suggestion%% *}"
+    LBUFFER+="$first_word"
+    ZSH_AUTOSUGGEST_BUFFER="${suggestion#"$first_word"}"
+  fi
+}
+zle -N autosuggest-accept-word
 
 # Keybindings
 bindkey -e
 
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
-bindkey '^ ' autosuggest-accept
+bindkey '^p' history-search-backward # Ctrl + p
+bindkey '^n' history-search-forward # Ctrl + n
+bindkey '^[w' kill-region # Alt + w
+bindkey '^ ' autosuggest-accept # Ctrl + Space
+# bindkey '^.' autosuggest-accept-word  # Alt + .
+bindkey '^l' forward-word # Ctrl + L
+bindkey '^h' backward-word # Ctrl + H
+
 
 # History
 HISTSIZE=5000

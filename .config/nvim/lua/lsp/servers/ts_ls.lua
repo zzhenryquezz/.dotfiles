@@ -12,8 +12,7 @@ lspconfig.ts_ls.setup({
 		plugins = {
 			{
 				name = "@vue/typescript-plugin",
-				location = vim.fn.stdpath("data")
-					.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+				location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
 				-- location = lspconfig.util.path.join(
 				-- 	utils.get_global_node_modules_path(),
 				-- 	"node_modules/@vue/typescript-plugin"

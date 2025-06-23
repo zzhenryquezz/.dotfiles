@@ -4,6 +4,19 @@ local util = require("lspconfig.util")
 
 lspconfig.eslint.setup({
 	capabilities,
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"javascript.jsx",
+		"typescript",
+		"typescriptreact",
+		"typescript.tsx",
+		"vue",
+		"svelte",
+		"astro",
+		"html",
+		"twig",
+	},
 	root_dir = util.root_pattern(
 		"eslint.config.ts",
 		"eslint.config.js",
