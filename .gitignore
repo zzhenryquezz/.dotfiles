@@ -7,3 +7,4 @@
 
 ansible/*vars.yml
 powershell/*vars.ps1
+.profile

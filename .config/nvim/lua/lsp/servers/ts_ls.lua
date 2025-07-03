@@ -6,6 +6,7 @@ lspconfig.ts_ls.setup({
 	root_dir = function(fname)
 		return lspconfig.util.root_pattern(".git")(fname)
 			or lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
+            or vim.fn.getcwd()
 	end,
 	capabilities = capabilities,
 	init_options = {

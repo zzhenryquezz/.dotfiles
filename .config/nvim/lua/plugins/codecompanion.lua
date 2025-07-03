@@ -5,15 +5,13 @@ return {
     },
     config = function()
         require("codecompanion").setup({
-            opts = {
-                log_leve = "DEBUG",
-            },
             strategies = {
                 chat = {
                     adapter = "copilot",
                     tools = {
                         groups = {
                             ["editor"] = {
+                                description = "Editor tools",
                                 tools = {
                                     "cmd_runner",
                                     "create_file",

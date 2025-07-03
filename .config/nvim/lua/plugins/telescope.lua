@@ -44,6 +44,7 @@ return {
 					find_files = {
 						find_command = {
 							"rg",
+                            "-L",
 							"--files",
 							"--hidden",
 							"--no-ignore",
