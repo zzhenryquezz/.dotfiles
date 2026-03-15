@@ -7,7 +7,6 @@ return {
         require("codecompanion").setup({
             strategies = {
                 chat = {
-                    adapter = "copilot",
                     tools = {
                         groups = {
                             ["editor"] = {
