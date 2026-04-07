@@ -16,6 +16,7 @@ lspconfig.eslint.setup({
 		"astro",
 		"html",
 		"twig",
+        "css"
 	},
 	root_dir = util.root_pattern(
 		"eslint.config.ts",

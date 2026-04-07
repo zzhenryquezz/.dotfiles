@@ -1,3 +1,4 @@
+require('lsp.servers.css')
 require('lsp.servers.eslint')
 require('lsp.servers.html')
 require('lsp.servers.intelephense')
