@@ -23,12 +23,10 @@ return {
 
         treesitter.install(ensure_installed):wait(300000)
 
-        -- local configs = require("nvim-treesitter.configs")
-        -- configs.setup({
-        -- 	auto_install = true,
-        -- 	sync_install = false,
-        -- 	highlight = { enable = true },
-        -- 	ensure_installed = ensure_installed,
-        -- })
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function(args)
+                pcall(vim.treesitter.start, args.buf)
+            end,
+        })
     end,
 }
