@@ -1,7 +1,7 @@
 local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-lspconfig.ts_ls.setup({
+vim.lsp.config("ts_ls", {
     root_dir = function(fname)
         return  lspconfig.util.root_pattern("tsconfig.json")(fname)
             or lspconfig.util.root_pattern(".git")(fname)

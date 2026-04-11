@@ -19,6 +19,7 @@ return {
             "yaml",
             "bash",
             "markdown",
+            "vue"
         }
 
         treesitter.install(ensure_installed):wait(300000)
