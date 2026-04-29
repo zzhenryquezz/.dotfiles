@@ -7,26 +7,35 @@
 -- or even
 -- local vue_language_server_path = vim.fn.stdpath('data') .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
 
-local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
+local vue_language_server_path = vim.fn.expand("$MASON/packages")
+    .. "/vue-language-server"
+    .. "/node_modules/@vue/language-server"
+local lspconfig = require("lspconfig")
 
 local vue_plugin = {
-  name = '@vue/typescript-plugin',
-  location = vue_language_server_path,
-  languages = { 'vue' },
-  configNamespace = 'typescript',
+    name = "@vue/typescript-plugin",
+    location = vue_language_server_path,
+    languages = { "vue" },
+    configNamespace = "typescript",
 }
 
-vim.lsp.config('vtsls', {
-  settings = {
-    vtsls = {
-      tsserver = {
-        globalPlugins = {
-          vue_plugin,
+vim.lsp.config("vtsls", {
+    root_dir = function(fname)
+        return lspconfig.util.root_pattern("tsconfig.json")(fname)
+            or lspconfig.util.root_pattern(".git")(fname)
+            or lspconfig.util.root_pattern("package.json")(fname)
+            or vim.fn.getcwd()
+    end,
+    settings = {
+        vtsls = {
+            tsserver = {
+                globalPlugins = {
+                    vue_plugin,
+                },
+            },
         },
-      },
     },
-  },
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 })
 
-vim.lsp.enable('vtsls')
+vim.lsp.enable("vtsls")

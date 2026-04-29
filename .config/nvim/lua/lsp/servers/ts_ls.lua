@@ -2,12 +2,12 @@ local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 vim.lsp.config("ts_ls", {
-    root_dir = function(fname)
-        return  lspconfig.util.root_pattern("tsconfig.json")(fname)
-            or lspconfig.util.root_pattern(".git")(fname)
-            or lspconfig.util.root_pattern("package.json")(fname)
-            or vim.fn.getcwd()
-    end,
+    -- root_dir = function(fname)
+    --     return  lspconfig.util.root_pattern("tsconfig.json")(fname)
+    --         or lspconfig.util.root_pattern(".git")(fname)
+    --         or lspconfig.util.root_pattern("package.json")(fname)
+    --         or vim.fn.getcwd()
+    -- end,
     capabilities = capabilities,
     init_options = {
         diagnostics = {

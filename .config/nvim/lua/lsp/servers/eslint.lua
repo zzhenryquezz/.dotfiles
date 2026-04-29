@@ -1,36 +1,12 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local util = require("lspconfig.util")
-
 local base_on_attach = vim.lsp.config.eslint.on_attach
 
 vim.lsp.config("eslint", {
     capabilities = capabilities,
-    filetypes = {
-        "javascript",
-        "javascriptreact",
-        "javascript.jsx",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
-        "vue",
-        "svelte",
-        "astro",
-        "html",
-        "twig",
-        "css",
-    },
-    root_dir = util.root_pattern(
-        "eslint.config.ts",
-        "eslint.config.js",
-        "eslint.config.mjs",
-        ".eslintrc",
-        ".eslintrc.js",
-        ".eslintrc.json",
-        ".eslintrc.yaml",
-        ".eslintrc.yml"
-    ),
     on_attach = function(client, bufnr)
         if not base_on_attach then
+            -- show warning if base_on_attach is not defined 
+            vim.notify("eslint on_attach is not defined, skipping eslint auto-fix on save", vim.log.levels.WARN)
             return
         end
 
