@@ -1,6 +1,7 @@
 import { Command } from 'commander'
 import { execSync, spawnSync } from 'child_process'
 import { select, confirm, editor } from '@inquirer/prompts'
+import chalk from 'chalk'
 
 function run(cmd) {
     try {
@@ -96,16 +97,28 @@ const command = new Command('commit')
 
         const selectedOption = await select({
             message: 'Select a commit message',
-            choices: options.map((opt, i) => ({
-                name: `${opt.subject}\n     ${opt.description}`,
-                value: i,
-                short: opt.subject,
-            })),
+            choices: options.map((opt) => {
+                // Highlight type(scope) in cyan, rest of subject in bold white
+                const subject = opt.subject.replace(
+                    /^([a-z]+(?:\([^)]+\))?)(:.+)/,
+                    (_, tag, rest) => chalk.cyan(tag) + chalk.bold.white(rest)
+                )
+
+                return {
+                    name: subject + '\n  ' + chalk.dim(opt.description),
+                    value: options.indexOf(opt),
+                    short: opt.subject,
+                }
+            }),
         })
 
         const selected = options[selectedOption]
 
-        console.log(`\nSelected:\n  Subject: ${selected.subject}\n  Description: ${selected.description}\n`)
+        console.log(
+            '\n' +
+            chalk.green('✔') + ' ' + chalk.bold.white(selected.subject) + '\n' +
+            '  ' + chalk.dim(selected.description) + '\n'
+        )
 
         const wantsEdit = await confirm({ message: 'Edit the message before committing?', default: false })
 
