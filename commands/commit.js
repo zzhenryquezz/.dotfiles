@@ -30,7 +30,7 @@ function parseOptions(response) {
     return options
 }
 
-const command = new Command('generate-commit')
+const command = new Command('commit')
     .description('Generate commit messages using GitHub Copilot')
     .action(async () => {
         try {
@@ -71,7 +71,7 @@ const command = new Command('generate-commit')
 
         console.log('⏳ Generating commit message options...')
 
-        const result = spawnSync('gh', ['copilot', '--', '-p', prompt, '--model', 'GPT-5 mini'], {
+        const result = spawnSync('copilot', ['--model', 'gpt-5-mini', '-p', prompt,], {
             encoding: 'utf8',
             stdio: ['pipe', 'pipe', 'pipe'],
         })
