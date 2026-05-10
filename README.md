@@ -34,7 +34,9 @@ These are the commands to help execute scripts and automations in this repositor
 
 ## Generate commit 
 
-Generate a commit with ai
+Generate a commit with ai using copilot non-interactive mode
+
+> This command onlye works if you have copilot installed and configured in your system
 
 ```bash
 node dot commit
