@@ -72,7 +72,7 @@ const command = new Command('commit')
 
         console.log('⏳ Generating commit message options...')
 
-        const result = spawnSync('copilot', ['--model', 'gpt-5-mini', '-p', prompt,], {
+        const result = spawnSync('copilot', ['--model', 'gpt-4.1', '-p', prompt,], {
             encoding: 'utf8',
             stdio: ['pipe', 'pipe', 'pipe'],
         })

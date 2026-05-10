@@ -15,7 +15,7 @@ tmux send-keys -t "$SESSION_NAME:0" "nvim" C-m
 tmux new-window -t "$SESSION_NAME" -n "ai" -c "$PWD"
 
 # open copilot chat in the ai window
-tmux send-keys -t "$SESSION_NAME:1" "copilot" C-m 
+# tmux send-keys -t "$SESSION_NAME:1" "copilot" C-m 
 
 # create a new window for running the code
 tmux new-window -t "$SESSION_NAME" -n "run" -c "$PWD"
