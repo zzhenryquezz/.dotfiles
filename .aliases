@@ -16,4 +16,5 @@ alias l='ls -CF'
 alias lt='ls --tree'
 
 alias op="bash $HOME/.dotfiles/scripts/open-project.sh"
+alias dot="node $HOME/.dotfiles/dot.js"
 
