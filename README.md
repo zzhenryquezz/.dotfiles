@@ -27,3 +27,15 @@ Then use GNU stow to create symbolic links
 ```bash
 stow .
 ```
+
+## Dot commands 
+
+These are the commands to help execute scripts and automations in this repository 
+
+## Generate commit 
+
+Generate a commit with ai
+
+```bash
+node dot commit
+```
