@@ -5,7 +5,7 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 # starship 
-export STARSHIP_CONFIG=~/.dotfiles/.config/starship/starship.toml
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 eval "$(starship init zsh)"
 
