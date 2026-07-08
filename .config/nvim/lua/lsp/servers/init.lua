@@ -1,5 +1,6 @@
 require('lsp.servers.css')
 require('lsp.servers.eslint')
+require('lsp.servers.gopls')
 require('lsp.servers.html')
 require('lsp.servers.intelephense')
 require('lsp.servers.jsonls')

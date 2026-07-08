@@ -15,7 +15,7 @@ vim.lsp.config('yamlls', {
 			},
 		},
 		editor = {
-			tabSize = 4,
+			tabSize = 2,
 		},
 	},
 })
