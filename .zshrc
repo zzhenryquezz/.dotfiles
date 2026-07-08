@@ -4,6 +4,10 @@
 # if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
+ZSHRC_DIR="${${(%):-%N}:A:h}"
+
+export DOTFILES_DIR="$ZSHRC_DIR"
+
 # starship 
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
@@ -83,4 +87,4 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 [ -f ~/.profile ] && source ~/.profile 
 [ -f $DOTFILES_DIR/.aliases ] && source $DOTFILES_DIR/.aliases
 
-export PATH="/home/henryque/.local/bin:$PATH"
+export PATH="/$HOME/.local/bin:$PATH"

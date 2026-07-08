@@ -1,4 +1,5 @@
 # Aliases
+
 alias vim='nvim'
 alias vi='nvim' 
 
@@ -15,6 +16,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias lt='ls --tree'
 
-alias op="bash $HOME/.dotfiles/scripts/open-project.sh"
-alias dot="node $HOME/.dotfiles/dot.js"
+alias dot="node $DOTFILES_DIR/dot.js"
+alias op="bash $DOTFILES_DIR/bin/open-project.sh"
 
