@@ -2,6 +2,9 @@
 
 SESSION_NAME=$(basename "$PWD")
 
+# replace dots with underline 
+SESSION_NAME=${SESSION_NAME//./_}
+
 # create session detached
 tmux new-session -d -s "$SESSION_NAME" -c "$PWD"
 

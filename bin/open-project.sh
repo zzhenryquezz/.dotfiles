@@ -3,7 +3,11 @@
 PROJECTS_DIR="$HOME/git"
 SCRIPTS_DIR="$(dirname "$0")"
 
-selected=$(ls -d "$PROJECTS_DIR"/*/  2>/dev/null | xargs -I{} basename {} | fzf --prompt="Select project: ")
+selected=$(
+        find "$PROJECTS_DIR" -mindepth 3 -maxdepth 3 -type d \
+        | sed "s|^$PROJECTS_DIR/||" \
+        | fzf --prompt="Select repository: "
+)
 
 [ -z "$selected" ] && exit 0
 
