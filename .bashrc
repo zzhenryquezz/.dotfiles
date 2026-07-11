@@ -106,3 +106,5 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.cargo ] && . "$HOME/.cargo/env"
+
+DOTFILES_DIR="$HOME/.dotfiles"
