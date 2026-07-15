@@ -11,4 +11,4 @@ selected=$(
 
 [ -z "$selected" ] && exit 0
 
-cd "$PROJECTS_DIR/$selected" && "$SCRIPTS_DIR/tmux-new-session.sh"
+"$SCRIPTS_DIR/tmux-new-session.sh" $PROJECTS_DIR/$selected

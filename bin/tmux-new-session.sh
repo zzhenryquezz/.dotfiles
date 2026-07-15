@@ -1,12 +1,16 @@
 #!/bin/bash
 
-SESSION_NAME=$(basename "$PWD")
+DIR="$1"
+
+echo "Creating new tmux session for directory: $DIR"
+
+SESSION_NAME=$(basename "$DIR")
 
 # replace dots with underline 
 SESSION_NAME=${SESSION_NAME//./_}
 
 # create session detached
-tmux new-session -d -s "$SESSION_NAME" -c "$PWD"
+tmux new-session -d -s "$SESSION_NAME" -c "$DIR"
 
 # rename the first window to "code"
 tmux rename-window -t "$SESSION_NAME:0" "code"
@@ -15,13 +19,13 @@ tmux rename-window -t "$SESSION_NAME:0" "code"
 tmux send-keys -t "$SESSION_NAME:0" "nvim" C-m
 
 # create a new window for ai tools
-# tmux new-window -t "$SESSION_NAME" -n "ai" -c "$PWD"
+# tmux new-window -t "$SESSION_NAME" -n "ai" -c "$DIR"
 
 # open copilot chat in the ai window
 # tmux send-keys -t "$SESSION_NAME:1" "copilot" C-m 
 
 # create a new window for running the code
-tmux new-window -t "$SESSION_NAME" -n "run" -c "$PWD"
+tmux new-window -t "$SESSION_NAME" -n "run" -c "$DIR"
 
 # select the first window
 tmux select-window -t "$SESSION_NAME:0"
