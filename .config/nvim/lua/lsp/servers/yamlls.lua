@@ -11,7 +11,7 @@ vim.lsp.config('yamlls', {
 				enable = true,
 			},
 			schemaStore = {
-				enable = true,
+				enable = false,
 			},
 		},
 		editor = {
