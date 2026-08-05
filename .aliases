@@ -18,4 +18,5 @@ alias lt='ls --tree'
 
 alias dot="node $DOTFILES_DIR/dot.js"
 alias op="bash $DOTFILES_DIR/bin/open-project.sh"
+alias tn="bash $DOTFILES_DIR/bin/tmux-new-session.sh"
 

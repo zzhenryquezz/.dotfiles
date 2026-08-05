@@ -81,6 +81,11 @@ return {
                     visible = true,
                     never_show = {
                         ".git",
+                        "desktop.ini",
+                        "$RECYCLE.BIN",
+                        "System Volume Information",
+                        "Recovery",
+                        "DumpStack.log.tmp"
                     },
                 },
             },
