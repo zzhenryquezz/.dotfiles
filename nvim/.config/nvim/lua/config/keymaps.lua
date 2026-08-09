@@ -1,5 +1,3 @@
-vim.keymap.set("i", "<c-s>", '<Esc>:w<cr>')
-
 -- toggle relative numbers
 vim.keymap.set("n", "<leader>rn", function()
     vim.opt.relativenumber = not vim.opt.relativenumber:get()

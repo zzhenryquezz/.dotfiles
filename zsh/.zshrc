@@ -88,3 +88,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 [ -f $DOTFILES_DIR/.aliases ] && source $DOTFILES_DIR/.aliases
 
 export PATH="/$HOME/.local/bin:$PATH"
+export ZSH_CONFIG_DIR="$HOME/.config/zsh"
+
+source "$ZSH_CONFIG_DIR/asdf.sh"
