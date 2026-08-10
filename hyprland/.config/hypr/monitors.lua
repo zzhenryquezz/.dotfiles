@@ -27,18 +27,27 @@ hl.monitor({
     scale  = secondary.scale,
 })
 
-for i = 1, 5 do
-    local key = i % 10 -- 10 maps to key 0
+hl.config({
+    cursor = {
+        default_monitor = primary.id
+    }
+})
+
+-- hl.workspace_rule({
+--     workspace = "1",
+--     monitor   = primary.id,
+-- })
+
+for i = 1, 4 do
     hl.workspace_rule({
-        workspace = tostring(key),
+        workspace = tostring(i),
         monitor   = primary.id,
     })
 end
 
-for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
+for i = 5, 10 do
     hl.workspace_rule({
-        workspace = tostring(key),
+        workspace = tostring(i),
         monitor   = secondary.id,
     })
 end

@@ -9,5 +9,5 @@ require("look")
 require("cursor")
 require("keybindings")
 require("popups")
-
+require("misc")
 
