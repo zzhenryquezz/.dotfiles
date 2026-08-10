@@ -3,6 +3,7 @@ vim.keymap.set("n", "<leader>rn", function()
     vim.opt.relativenumber = not vim.opt.relativenumber:get()
 end, { noremap = true, silent = true })
 
+
 -- center on cursor or page up/down
 vim.keymap.set("n", "<c-d>", '<c-d>zz')
 vim.keymap.set("n", "<c-s>", ':w<cr>')
@@ -17,4 +18,9 @@ vim.keymap.set("n", "<Down>", "<nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Left>", "<nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Right>", "<nop>", { noremap = true, silent = true })
 
+-- Maps <Leader>o to insert a blank line below (keeps cursor in place)
+vim.keymap.set('n', '<Leader>o', 'm`o<Esc>``')
+
+-- Maps <Leader>O to insert a blank line above (keeps cursor in place)
+vim.keymap.set('n', '<Leader>O', 'm`O<Esc>``')
 
