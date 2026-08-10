@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Notion[work]
+Comment=Notion Web App
+Exec=google-chrome-stable --profile-directory="Profile 1"  --app=https://notion.com/p
+Terminal=false
+Type=Application
+Icon=notion
+Categories=Network;

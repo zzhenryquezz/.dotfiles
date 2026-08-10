@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Browser[work]
+Comment=Browser work
+Exec=google-chrome-stable --profile-directory="Default"
+Terminal=false
+Type=Application
+Icon=google-chrome
+Categories=Network;
