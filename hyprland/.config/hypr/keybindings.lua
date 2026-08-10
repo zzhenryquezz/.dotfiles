@@ -53,3 +53,5 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 
+-- print
+hl.bind("PRINT",  hl.dsp.exec_cmd("hyprshot -m region --raw | satty --filename -"))
