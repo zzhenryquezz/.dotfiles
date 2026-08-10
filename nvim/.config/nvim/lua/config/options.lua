@@ -9,7 +9,6 @@ vim.cmd("set smartindent")
 vim.cmd("set autoindent")
 
 vim.cmd("set signcolumn=yes")
-vim.cmd("set clipboard=unnamedplus")
 vim.cmd("set spelllang=en_us,pt_br")
 vim.cmd("set spell")
 vim.cmd("set relativenumber")
