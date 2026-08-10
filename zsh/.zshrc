@@ -91,3 +91,7 @@ export PATH="/$HOME/.local/bin:$PATH"
 export ZSH_CONFIG_DIR="$HOME/.config/zsh"
 
 source "$ZSH_CONFIG_DIR/asdf.sh"
+
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+bindkey  "^[[3~"  delete-char
