@@ -4,7 +4,6 @@
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(MAIN_MOD .. " + T", hl.dsp.exec_cmd("kitty"))
-hl.bind(MAIN_MOD .. " + C", hl.dsp.exec_cmd("kitty -e nvim ~/.config/hypr"))
 hl.bind(MAIN_MOD .. " + Q", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. " + M",
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
@@ -18,6 +17,11 @@ hl.bind(MAIN_MOD .. " + H", hl.dsp.focus({ direction = "left" }))
 hl.bind(MAIN_MOD .. " + L", hl.dsp.focus({ direction = "right" }))
 hl.bind(MAIN_MOD .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(MAIN_MOD .. " + J", hl.dsp.focus({ direction = "down" }))
+
+hl.bind(MAIN_MOD .. " + SHIFT + H", hl.dsp.window.swap({ direction = "left" }))
+hl.bind(MAIN_MOD .. " + SHIFT + L", hl.dsp.window.swap({ direction = "right" }))
+hl.bind(MAIN_MOD .. " + SHIFT + K", hl.dsp.window.swap({ direction = "up" }))
+hl.bind(MAIN_MOD .. " + SHIFT + J", hl.dsp.window.swap({ direction = "down" }))
 
 -- Switch workspaces with MAIN_MOD + [0-9]
 -- Move active window to a workspace with MAIN_MOD + SHIFT + [0-9]
@@ -60,4 +64,4 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 
 -- print
 hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m region --raw | satty --filename -"))
-hl.bind(MAIN_MOD .. " + SHIFT + + L", hl.dsp.exec_cmd("hyprlock"))
+-- hl.bind(MAIN_MOD .. " + SHIFT + + L", hl.dsp.exec_cmd("hyprlock"))
