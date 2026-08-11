@@ -33,11 +33,6 @@ hl.config({
     }
 })
 
--- hl.workspace_rule({
---     workspace = "1",
---     monitor   = primary.id,
--- })
-
 for i = 1, 4 do
     hl.workspace_rule({
         workspace = tostring(i),

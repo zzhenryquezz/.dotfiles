@@ -8,6 +8,8 @@ require("launcher")
 require("look")
 require("cursor")
 require("keybindings")
+require("keyboard")
 require("popups")
 require("misc")
+
 
