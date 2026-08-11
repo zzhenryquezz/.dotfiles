@@ -7,7 +7,6 @@
 }
 
 
-
 #waybar {
 	background: transparent;
 }
@@ -19,17 +18,21 @@
 }
 
 #workspaces button {
-	color: @lavender;
 	padding: 0.4rem;
+}
+
+#workspaces button.workspace-hover {
+	background-color: @sky;
 }
 
 #workspaces button.active {
 	background-color: @sky;
 }
 
-#workspaces button:hover {
-	color: @sapphire;
+#workspaces .active .workspace-label {
+	color: @surface0;
 }
+
 
 #custom-music,
 #clock,
@@ -45,13 +48,13 @@
 #network {
 	background-color: @surface0;
 	padding: 0 12px;
-	margin: 5px;
+	margin: 4px;
 	border-radius: 1rem;
 	/* border: 1px solid red; */
 }
 
 #clock {
-	color: @blue;
+	color: @sky;
 }
 
 #pulseaudio {
@@ -89,7 +92,7 @@
 	background: @mauve;
 }
 
-#custom-notify {
+#clock.date {
 	margin-right: 20px;
 }
 

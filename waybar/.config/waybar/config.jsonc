@@ -16,7 +16,8 @@
         "network",
         "cpu",
         "memory",
-        "custom/notify"
+        "custom/notify",
+        "clock#date"
     ],
     "hyprland/workspaces": {
         "format": "{name}",
@@ -67,12 +68,10 @@
     "clock": {
         "interval": 1,
         "format": "󰥔 {:%H:%M:%S}",
+    },
+    "clock#date": {
+        "format": "󰥔 {:%Y-%m-%d}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "calendar": {
-            "format": {
-                "today": "<span color='#75f1fa'><b>{}</b></span>"
-            }
-        }
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
@@ -87,7 +86,7 @@
         "ignored-sinks": [
             "Easy Effects Sink"
         ],
-        "on-click": "pavucontrol"
+        "on-click": "exec kitty --class popup --title=wiremix -e wiremix --tab output"
     },
     "pulseaudio/slider": {
         "min": 0,
@@ -106,12 +105,13 @@
         "spacing": 10,
         "show-passive-items": false,
         "icons": {
-            "blueman": "bluetooth"
+            "blueman": "bluetooth",
+            "bitwarden": "catppuccin-key"
         }
     },
     "hyprland/language": {
         "format": "󰌌 {short} {variant}",
-        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+        "on-click": "hyprctl switchxkblayout all next"
     },
     "custom/notify": {
         "format": "{}",
