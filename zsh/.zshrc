@@ -6,7 +6,6 @@
 # fi
 ZSHRC_DIR="${${(%):-%N}:A:h}"
 
-export DOTFILES_DIR="$ZSHRC_DIR"
 
 # starship 
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
@@ -85,7 +84,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Shell integrations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.profile ] && source ~/.profile 
-[ -f $DOTFILES_DIR/.aliases ] && source $DOTFILES_DIR/.aliases
+[ -f ~/.aliases ] && source ~/.aliases
 
 export PATH="/$HOME/.local/bin:$PATH"
 export ZSH_CONFIG_DIR="$HOME/.config/zsh"
