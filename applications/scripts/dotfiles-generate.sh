@@ -18,7 +18,7 @@ for dir in "$SOURCE_DIR"/*/; do
 [Desktop Entry] 
 Name=[config] $name 
 Type=Application 
-Exec=kitty -e nvim "$dir" 
+Exec=kitty --directory "$dir" -e nvim 
 Terminal=false
 Icon=catppuccin-3d
 EOF
