@@ -1,0 +1,12 @@
+name: dot
+help: Run scripts on dot files
+version: 0.1.0
+
+commands:
+    - name: waybar
+      commands:
+          - name: reload
+            help: reload waybar
+
+          - name: watch
+            help: watch for changes
