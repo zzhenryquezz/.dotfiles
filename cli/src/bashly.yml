@@ -10,3 +10,10 @@ commands:
 
           - name: watch
             help: watch for changes
+    - name: tmux
+      commands:
+          - name: project
+            help: open project
+
+          - name: create
+            help: create a tmux session

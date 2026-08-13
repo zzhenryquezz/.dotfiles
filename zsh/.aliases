@@ -16,6 +16,6 @@ alias l='ls -CF'
 alias lt='ls --tree'
 alias cat="bat"
 
-alias op="bash $DOTFILES_DIR/bin/open-project.sh"
-alias tn="bash $DOTFILES_DIR/bin/tmux-new-session.sh"
+alias op="dot tmux project"
+alias tn="dot tmux create"
 
