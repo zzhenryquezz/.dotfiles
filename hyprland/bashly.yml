@@ -1,0 +1,34 @@
+name: hypr
+help: hypr commands
+version: 0.1.0
+
+commands:
+    - name: list
+      help: list hyprland modifiers
+
+    - name: activate
+      help: activate hyprland modifier
+      args:
+          - name: modifier
+            required: true
+            repeatable: true
+            unique: true
+            help: modifier or list of modifiers
+
+    - name: deactivate
+      help: deactivate hyprland modifier
+      args:
+          - name: modifier
+            required: true
+            repeatable: true
+            unique: true
+            help: modifier or list of modifiers
+
+    - name: toggle
+      help: toggle hyprland modifier
+      args:
+          - name: modifier
+            required: true
+            repeatable: true
+            unique: true
+            help: modifier or list of modifiers

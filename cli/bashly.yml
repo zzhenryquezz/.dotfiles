@@ -16,33 +16,7 @@ commands:
           catch_help: true
 
     - name: hypr
-      commands:
-          - name: list
-            help: list hyprland modifiers
-
-          - name: activate
-            help: activate hyprland modifier
-            args:
-                - name: modifier
-                  required: true
-                  repeatable: true
-                  unique: true
-                  help: modifier or list of modifiers
-
-          - name: deactivate
-            help: deactivate hyprland modifier
-            args:
-                - name: modifier
-                  required: true
-                  repeatable: true
-                  unique: true
-                  help: modifier or list of modifiers
-
-          - name: toggle
-            help: toggle hyprland modifier
-            args:
-                - name: modifier
-                  required: true
-                  repeatable: true
-                  unique: true
-                  help: modifier or list of modifiers
+      catch_all:
+          label: params
+          help: parameters
+          catch_help: true
