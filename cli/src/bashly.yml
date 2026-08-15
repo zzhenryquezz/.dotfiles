@@ -4,12 +4,7 @@ version: 0.1.0
 
 commands:
     - name: waybar
-      commands:
-          - name: reload
-            help: reload waybar
-
-          - name: watch
-            help: watch for changes
+      catch_all: true
 
     - name: tmux
       commands:

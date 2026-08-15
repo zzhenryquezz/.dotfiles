@@ -1,0 +1,10 @@
+name: waybar
+help: waybar commands
+version: 0.1.0
+
+commands:
+    - name: restart
+      help: restart waybar
+
+    - name: watch
+      help: watch for changes

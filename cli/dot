@@ -52,57 +52,8 @@ dot_waybar_usage() {
   printf "dot waybar\n\n"
 
   printf "%s\n" "Usage:"
-  printf "  dot waybar COMMAND\n"
-  printf "  dot waybar [COMMAND] --help | -h\n"
-  echo
-  # :command.usage_commands
-  printf "%s\n" "Commands:"
-  printf "  %s   reload waybar\n" "reload"
-  printf "  %s   watch for changes\n" "watch "
-  echo
-
-  # :command.long_usage
-  if [[ -n "$long_usage" ]]; then
-    # :command.usage_options
-    printf "%s\n" "Options:"
-
-    # :command.usage_fixed_flags
-    printf "  %s\n" "--help, -h"
-    printf "    Show this help\n"
-    echo
-
-  fi
-}
-
-# :command.usage
-dot_waybar_reload_usage() {
-  printf "dot waybar reload - reload waybar\n\n"
-
-  printf "%s\n" "Usage:"
-  printf "  dot waybar reload\n"
-  printf "  dot waybar reload --help | -h\n"
-  echo
-
-  # :command.long_usage
-  if [[ -n "$long_usage" ]]; then
-    # :command.usage_options
-    printf "%s\n" "Options:"
-
-    # :command.usage_fixed_flags
-    printf "  %s\n" "--help, -h"
-    printf "    Show this help\n"
-    echo
-
-  fi
-}
-
-# :command.usage
-dot_waybar_watch_usage() {
-  printf "dot waybar watch - watch for changes\n\n"
-
-  printf "%s\n" "Usage:"
-  printf "  dot waybar watch\n"
-  printf "  dot waybar watch --help | -h\n"
+  printf "  dot waybar [--] [...]\n"
+  printf "  dot waybar --help | -h\n"
   echo
 
   # :command.long_usage
@@ -384,6 +335,15 @@ inspect_args() {
     echo args: none
   fi
 
+  if ((${#other_args[@]})); then
+    echo
+    echo other_args:
+    echo "- \${other_args[*]} = ${other_args[*]}"
+    for k in "${!other_args[@]}"; do
+      echo "- \${other_args[$k]} = ${other_args[$k]}"
+    done
+  fi
+
   if ((${#deps[@]})); then
     readarray -t sorted_keys < <(printf '%s\n' "${!deps[@]}" | sort)
     echo
@@ -404,24 +364,11 @@ inspect_args() {
 }
 
 # :command.command_functions
-
 # :command.function
-dot_waybar_reload_command() {
+dot_waybar_command() {
 
-  # src/waybar_reload_command.sh
-  killall waybar && waybar & disown
-
-}
-
-# :command.function
-dot_waybar_watch_command() {
-
-  # src/waybar_watch_command.sh
-  echo "# This file is located at 'src/waybar_watch_command.sh'."
-  echo "# It contains the implementation for the 'dot waybar watch' command."
-  echo "# The code you write here will be wrapped by a function named 'dot_waybar_watch_command()'."
-  echo "# Feel free to edit this file; your changes will persist when regenerating."
-  inspect_args
+  # src/waybar_command.sh
+  exec "$DOTFILES_DIR/waybar/waybar" "${other_args[@]}"
 
 }
 
@@ -726,147 +673,29 @@ dot_waybar_parse_requirements() {
   done
 
   # :command.command_filter
-  action=${1:-}
-
-  case $action in
-    -*) ;;
-
-    reload)
-      action="reload"
-      shift
-      dot_waybar_reload_parse_requirements "$@"
-      shift $#
-      ;;
-
-    watch)
-      action="watch"
-      shift
-      dot_waybar_watch_parse_requirements "$@"
-      shift $#
-      ;;
-
-    # :command.command_fallback
-    "")
-      dot_waybar_usage >&2
-      exit 1
-      ;;
-
-    *)
-      printf "invalid command: %s\n" "$action" >&2
-      exit 1
-      ;;
-
-  esac
+  action="waybar"
 
   # :command.parse_requirements_while
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
 
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-        # :command.parse_requirements_case
-        # :command.parse_requirements_case_simple
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
-
-        ;;
-
-    esac
-  done
-
-}
-
-# :command.parse_requirements
-dot_waybar_reload_parse_requirements() {
-  local key
-
-  # :command.fixed_flags_filter
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-      --help | -h)
-        long_usage=yes
-        dot_waybar_reload_usage
-        exit
-        ;;
-
-      *)
+      --)
+        shift
+        other_args+=("$@")
         break
         ;;
 
-    esac
-  done
-
-  # :command.command_filter
-  action="waybar reload"
-
-  # :command.parse_requirements_while
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
+        other_args+=("$1")
+        shift
         ;;
 
       *)
         # :command.parse_requirements_case
-        # :command.parse_requirements_case_simple
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
-
-        ;;
-
-    esac
-  done
-
-}
-
-# :command.parse_requirements
-dot_waybar_watch_parse_requirements() {
-  local key
-
-  # :command.fixed_flags_filter
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-      --help | -h)
-        long_usage=yes
-        dot_waybar_watch_usage
-        exit
-        ;;
-
-      *)
-        break
-        ;;
-
-    esac
-  done
-
-  # :command.command_filter
-  action="waybar watch"
-
-  # :command.parse_requirements_while
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-        # :command.parse_requirements_case
-        # :command.parse_requirements_case_simple
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
+        # :command.parse_requirements_case_catch_all
+        other_args+=("$1")
+        shift
 
         ;;
 
@@ -1391,6 +1220,7 @@ run() {
   # :command.globals
   declare -g long_usage=''
   declare -g -A args=()
+  declare -g -a other_args=()
   declare -g -A deps=()
   declare -g -a env_var_names=()
   declare -g -a input=()
@@ -1401,8 +1231,6 @@ run() {
 
   case "$action" in
     "waybar") dot_waybar_command ;;
-    "waybar reload") dot_waybar_reload_command ;;
-    "waybar watch") dot_waybar_watch_command ;;
     "tmux") dot_tmux_command ;;
     "tmux project") dot_tmux_project_command ;;
     "tmux create") dot_tmux_create_command ;;
