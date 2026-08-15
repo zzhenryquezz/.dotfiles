@@ -1,0 +1,14 @@
+name: tmux
+help: tmux commands
+version: 0.1.0
+extensible: tmux
+
+commands:
+    - name: project
+      help: open project from projects folder
+
+    - name: create
+      help: create a tmux session
+      args:
+          - name: dir
+            help: dir to open the session

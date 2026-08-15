@@ -74,75 +74,18 @@ dot_tmux_usage() {
   printf "dot tmux\n\n"
 
   printf "%s\n" "Usage:"
-  printf "  dot tmux COMMAND\n"
-  printf "  dot tmux [COMMAND] --help | -h\n"
-  echo
-  # :command.usage_commands
-  printf "%s\n" "Commands:"
-  printf "  %s   open project\n" "project"
-  printf "  %s   create a tmux session\n" "create "
+  printf "  dot tmux [--] [PARAMS...]\n"
+  printf "  dot tmux --help | -h\n"
   echo
 
   # :command.long_usage
   if [[ -n "$long_usage" ]]; then
-    # :command.usage_options
-    printf "%s\n" "Options:"
-
-    # :command.usage_fixed_flags
-    printf "  %s\n" "--help, -h"
-    printf "    Show this help\n"
-    echo
-
-  fi
-}
-
-# :command.usage
-dot_tmux_project_usage() {
-  printf "dot tmux project - open project\n\n"
-
-  printf "%s\n" "Usage:"
-  printf "  dot tmux project\n"
-  printf "  dot tmux project --help | -h\n"
-  echo
-
-  # :command.long_usage
-  if [[ -n "$long_usage" ]]; then
-    # :command.usage_options
-    printf "%s\n" "Options:"
-
-    # :command.usage_fixed_flags
-    printf "  %s\n" "--help, -h"
-    printf "    Show this help\n"
-    echo
-
-  fi
-}
-
-# :command.usage
-dot_tmux_create_usage() {
-  printf "dot tmux create - create a tmux session\n\n"
-
-  printf "%s\n" "Usage:"
-  printf "  dot tmux create [DIR]\n"
-  printf "  dot tmux create --help | -h\n"
-  echo
-
-  # :command.long_usage
-  if [[ -n "$long_usage" ]]; then
-    # :command.usage_options
-    printf "%s\n" "Options:"
-
-    # :command.usage_fixed_flags
-    printf "  %s\n" "--help, -h"
-    printf "    Show this help\n"
-    echo
 
     # :command.usage_args
     printf "%s\n" "Arguments:"
 
-    # :argument.usage
-    printf "  %s\n" "DIR"
-    printf "    dir to open the session\n"
+    echo "  PARAMS..."
+    printf "    Docker parameters\n"
     echo
 
   fi
@@ -367,83 +310,23 @@ inspect_args() {
 # :command.function
 dot_waybar_command() {
 
-  # src/waybar_command.sh
+  # commands/waybar_command.sh
   exec "$DOTFILES_DIR/waybar/waybar" "${other_args[@]}"
 
 }
 
 # :command.function
-dot_tmux_project_command() {
+dot_tmux_command() {
 
-  # src/tmux_project_command.sh
-  #!/bin/bash
-
-  PROJECTS_DIR="$HOME/git"
-  SCRIPTS_DIR="$(dirname "$0")"
-
-  selected=$(
-          find "$PROJECTS_DIR" -mindepth 3 -maxdepth 3 -type d \
-          | sed "s|^$PROJECTS_DIR/||" \
-          | fzf --prompt="Select repository: "
-  )
-
-  [ -z "$selected" ] && exit 0
-
-  "$0" tmux create $PROJECTS_DIR/$selected
-
-}
-
-# :command.function
-dot_tmux_create_command() {
-
-  # src/tmux_create_command.sh
-  #!/bin/bash
-
-  DIR=${args[dir]}
-
-  echo "Creating new tmux session for directory: $DIR"
-
-  SESSION_NAME=$(basename "$DIR")
-
-  # replace dots with underline
-
-  SESSION_NAME=${SESSION_NAME//./_}
-
-  # create session detached
-  tmux new-session -d -s "$SESSION_NAME" -c "$DIR"
-
-  # rename the first window to "code"
-  tmux rename-window -t "$SESSION_NAME:0" "code"
-
-  # open nvim in the first window
-  tmux send-keys -t "$SESSION_NAME:0" "nvim" C-m
-
-  # create a new window for ai tools
-  # tmux new-window -t "$SESSION_NAME" -n "ai" -c "$DIR"
-
-  # open copilot chat in the ai window
-  # tmux send-keys -t "$SESSION_NAME:1" "copilot" C-m
-
-  # create a new window for running the code
-  tmux new-window -t "$SESSION_NAME" -n "run" -c "$DIR"
-
-  # select the first window
-  tmux select-window -t "$SESSION_NAME:0"
-
-  # tmux attach -t "$SESSION_NAME"
-
-  if [ "$SWITCH_CLIENT" = "1" ]; then
-      tmux switch-client -t "$SESSION_NAME"
-  else
-      tmux attach-session -t "$SESSION_NAME"
-  fi
+  # commands/tmux_command.sh
+  exec "$DOTFILES_DIR/tmux/tmux" "${other_args[@]}"
 
 }
 
 # :command.function
 dot_hypr_list_command() {
 
-  # src/hypr_list_command.sh
+  # commands/hypr_list_command.sh
   all=(~/.config/hypr/modifiers/*)
   active=(~/.config/hypr/active/*)
 
@@ -462,7 +345,7 @@ dot_hypr_list_command() {
 # :command.function
 dot_hypr_activate_command() {
 
-  # src/hypr_activate_command.sh
+  # commands/hypr_activate_command.sh
   modifiers=''
   eval "modifiers=(${args[modifier]:-})"
 
@@ -498,7 +381,7 @@ dot_hypr_activate_command() {
 # :command.function
 dot_hypr_deactivate_command() {
 
-  # src/hypr_deactivate_command.sh
+  # commands/hypr_deactivate_command.sh
   modifiers=''
   eval "modifiers=(${args[modifier]:-})"
 
@@ -527,7 +410,7 @@ dot_hypr_deactivate_command() {
 # :command.function
 dot_hypr_toggle_command() {
 
-  # src/hypr_toggle_command.sh
+  # commands/hypr_toggle_command.sh
   modifiers=''
   eval "modifiers=(${args[modifier]:-})"
 
@@ -712,12 +595,6 @@ dot_tmux_parse_requirements() {
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
-      --help | -h)
-        long_usage=yes
-        dot_tmux_usage
-        exit
-        ;;
-
       *)
         break
         ;;
@@ -726,153 +603,29 @@ dot_tmux_parse_requirements() {
   done
 
   # :command.command_filter
-  action=${1:-}
-
-  case $action in
-    -*) ;;
-
-    project)
-      action="project"
-      shift
-      dot_tmux_project_parse_requirements "$@"
-      shift $#
-      ;;
-
-    create)
-      action="create"
-      shift
-      dot_tmux_create_parse_requirements "$@"
-      shift $#
-      ;;
-
-    # :command.command_fallback
-    "")
-      dot_tmux_usage >&2
-      exit 1
-      ;;
-
-    *)
-      printf "invalid command: %s\n" "$action" >&2
-      exit 1
-      ;;
-
-  esac
+  action="tmux"
 
   # :command.parse_requirements_while
   while [[ $# -gt 0 ]]; do
     key="$1"
     case "$key" in
 
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-        # :command.parse_requirements_case
-        # :command.parse_requirements_case_simple
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
-
-        ;;
-
-    esac
-  done
-
-}
-
-# :command.parse_requirements
-dot_tmux_project_parse_requirements() {
-  local key
-
-  # :command.fixed_flags_filter
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-      --help | -h)
-        long_usage=yes
-        dot_tmux_project_usage
-        exit
-        ;;
-
-      *)
+      --)
+        shift
+        other_args+=("$@")
         break
         ;;
 
-    esac
-  done
-
-  # :command.command_filter
-  action="tmux project"
-
-  # :command.parse_requirements_while
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
       -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
+        other_args+=("$1")
+        shift
         ;;
 
       *)
         # :command.parse_requirements_case
-        # :command.parse_requirements_case_simple
-        printf "invalid argument: %s\n" "$key" >&2
-        exit 1
-
-        ;;
-
-    esac
-  done
-
-}
-
-# :command.parse_requirements
-dot_tmux_create_parse_requirements() {
-  local key
-
-  # :command.fixed_flags_filter
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-      --help | -h)
-        long_usage=yes
-        dot_tmux_create_usage
-        exit
-        ;;
-
-      *)
-        break
-        ;;
-
-    esac
-  done
-
-  # :command.command_filter
-  action="tmux create"
-
-  # :command.parse_requirements_while
-  while [[ $# -gt 0 ]]; do
-    key="$1"
-    case "$key" in
-
-      -?*)
-        printf "invalid option: %s\n" "$key" >&2
-        exit 1
-        ;;
-
-      *)
-        # :command.parse_requirements_case
-        # :command.parse_requirements_case_simple
-        # :argument.case
-        if [[ -z ${args['dir']+x} ]]; then
-          args['dir']=$1
-          shift
-        else
-          printf "invalid argument: %s\n" "$key" >&2
-          exit 1
-        fi
+        # :command.parse_requirements_case_catch_all
+        other_args+=("$1")
+        shift
 
         ;;
 
@@ -1232,8 +985,6 @@ run() {
   case "$action" in
     "waybar") dot_waybar_command ;;
     "tmux") dot_tmux_command ;;
-    "tmux project") dot_tmux_project_command ;;
-    "tmux create") dot_tmux_create_command ;;
     "hypr") dot_hypr_command ;;
     "hypr list") dot_hypr_list_command ;;
     "hypr activate") dot_hypr_activate_command ;;

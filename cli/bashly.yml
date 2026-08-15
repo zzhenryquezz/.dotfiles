@@ -4,18 +4,16 @@ version: 0.1.0
 
 commands:
     - name: waybar
-      catch_all: true
+      catch_all:
+          label: params
+          help: parameters
+          catch_help: true
 
     - name: tmux
-      commands:
-          - name: project
-            help: open project
-
-          - name: create
-            help: create a tmux session
-            args:
-                - name: dir
-                  help: dir to open the session
+      catch_all:
+          label: params
+          help: parameters
+          catch_help: true
 
     - name: hypr
       commands:
