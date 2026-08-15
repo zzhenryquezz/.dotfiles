@@ -10,6 +10,7 @@ commands:
 
           - name: watch
             help: watch for changes
+
     - name: tmux
       commands:
           - name: project
@@ -17,3 +18,38 @@ commands:
 
           - name: create
             help: create a tmux session
+            args:
+                - name: dir
+                  help: dir to open the session
+
+    - name: hypr
+      commands:
+          - name: list
+            help: list hyprland modifiers
+
+          - name: activate
+            help: activate hyprland modifier
+            args:
+                - name: modifier
+                  required: true
+                  repeatable: true
+                  unique: true
+                  help: modifier or list of modifiers
+
+          - name: deactivate
+            help: deactivate hyprland modifier
+            args:
+                - name: modifier
+                  required: true
+                  repeatable: true
+                  unique: true
+                  help: modifier or list of modifiers
+
+          - name: toggle
+            help: toggle hyprland modifier
+            args:
+                - name: modifier
+                  required: true
+                  repeatable: true
+                  unique: true
+                  help: modifier or list of modifiers

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Notion[work]
+Name=Notion[personal]
 Comment=Notion Web App
 Exec=google-chrome-stable --profile-directory="Profile 1"  --app=https://notion.com/p
 Terminal=false

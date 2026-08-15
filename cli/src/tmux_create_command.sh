@@ -1,6 +1,7 @@
 #!/bin/bash
 
-DIR="$1"
+
+DIR=${args[dir]}
 
 echo "Creating new tmux session for directory: $DIR"
 

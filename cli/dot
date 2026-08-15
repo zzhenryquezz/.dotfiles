@@ -28,6 +28,7 @@ dot_usage() {
   printf "%s\n" "Commands:"
   printf "  %s   \n" "waybar"
   printf "  %s   \n" "tmux  "
+  printf "  %s   \n" "hypr  "
   echo
 
   # :command.long_usage
@@ -171,7 +172,7 @@ dot_tmux_create_usage() {
   printf "dot tmux create - create a tmux session\n\n"
 
   printf "%s\n" "Usage:"
-  printf "  dot tmux create\n"
+  printf "  dot tmux create [DIR]\n"
   printf "  dot tmux create --help | -h\n"
   echo
 
@@ -183,6 +184,155 @@ dot_tmux_create_usage() {
     # :command.usage_fixed_flags
     printf "  %s\n" "--help, -h"
     printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "%s\n" "Arguments:"
+
+    # :argument.usage
+    printf "  %s\n" "DIR"
+    printf "    dir to open the session\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+dot_hypr_usage() {
+  printf "dot hypr\n\n"
+
+  printf "%s\n" "Usage:"
+  printf "  dot hypr COMMAND\n"
+  printf "  dot hypr [COMMAND] --help | -h\n"
+  echo
+  # :command.usage_commands
+  printf "%s\n" "Commands:"
+  printf "  %s   list hyprland modifiers\n" "list      "
+  printf "  %s   activate hyprland modifier\n" "activate  "
+  printf "  %s   deactivate hyprland modifier\n" "deactivate"
+  printf "  %s   toggle hyprland modifier\n" "toggle    "
+  echo
+
+  # :command.long_usage
+  if [[ -n "$long_usage" ]]; then
+    # :command.usage_options
+    printf "%s\n" "Options:"
+
+    # :command.usage_fixed_flags
+    printf "  %s\n" "--help, -h"
+    printf "    Show this help\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+dot_hypr_list_usage() {
+  printf "dot hypr list - list hyprland modifiers\n\n"
+
+  printf "%s\n" "Usage:"
+  printf "  dot hypr list\n"
+  printf "  dot hypr list --help | -h\n"
+  echo
+
+  # :command.long_usage
+  if [[ -n "$long_usage" ]]; then
+    # :command.usage_options
+    printf "%s\n" "Options:"
+
+    # :command.usage_fixed_flags
+    printf "  %s\n" "--help, -h"
+    printf "    Show this help\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+dot_hypr_activate_usage() {
+  printf "dot hypr activate - activate hyprland modifier\n\n"
+
+  printf "%s\n" "Usage:"
+  printf "  dot hypr activate MODIFIER...\n"
+  printf "  dot hypr activate --help | -h\n"
+  echo
+
+  # :command.long_usage
+  if [[ -n "$long_usage" ]]; then
+    # :command.usage_options
+    printf "%s\n" "Options:"
+
+    # :command.usage_fixed_flags
+    printf "  %s\n" "--help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "%s\n" "Arguments:"
+
+    # :argument.usage
+    printf "  %s\n" "MODIFIER..."
+    printf "    modifier or list of modifiers\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+dot_hypr_deactivate_usage() {
+  printf "dot hypr deactivate - deactivate hyprland modifier\n\n"
+
+  printf "%s\n" "Usage:"
+  printf "  dot hypr deactivate MODIFIER...\n"
+  printf "  dot hypr deactivate --help | -h\n"
+  echo
+
+  # :command.long_usage
+  if [[ -n "$long_usage" ]]; then
+    # :command.usage_options
+    printf "%s\n" "Options:"
+
+    # :command.usage_fixed_flags
+    printf "  %s\n" "--help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "%s\n" "Arguments:"
+
+    # :argument.usage
+    printf "  %s\n" "MODIFIER..."
+    printf "    modifier or list of modifiers\n"
+    echo
+
+  fi
+}
+
+# :command.usage
+dot_hypr_toggle_usage() {
+  printf "dot hypr toggle - toggle hyprland modifier\n\n"
+
+  printf "%s\n" "Usage:"
+  printf "  dot hypr toggle MODIFIER...\n"
+  printf "  dot hypr toggle --help | -h\n"
+  echo
+
+  # :command.long_usage
+  if [[ -n "$long_usage" ]]; then
+    # :command.usage_options
+    printf "%s\n" "Options:"
+
+    # :command.usage_fixed_flags
+    printf "  %s\n" "--help, -h"
+    printf "    Show this help\n"
+    echo
+
+    # :command.usage_args
+    printf "%s\n" "Arguments:"
+
+    # :argument.usage
+    printf "  %s\n" "MODIFIER..."
+    printf "    modifier or list of modifiers\n"
     echo
 
   fi
@@ -292,7 +442,7 @@ dot_tmux_project_command() {
 
   [ -z "$selected" ] && exit 0
 
-  "$SCRIPTS_DIR/tmux-new-session.sh" $PROJECTS_DIR/$selected
+  "$0" tmux create $PROJECTS_DIR/$selected
 
 }
 
@@ -302,7 +452,7 @@ dot_tmux_create_command() {
   # src/tmux_create_command.sh
   #!/bin/bash
 
-  DIR="$1"
+  DIR=${args[dir]}
 
   echo "Creating new tmux session for directory: $DIR"
 
@@ -340,6 +490,128 @@ dot_tmux_create_command() {
   else
       tmux attach-session -t "$SESSION_NAME"
   fi
+
+}
+
+# :command.function
+dot_hypr_list_command() {
+
+  # src/hypr_list_command.sh
+  all=(~/.config/hypr/modifiers/*)
+  active=(~/.config/hypr/active/*)
+
+  for modifier in "${all[@]}"; do
+      name=$(basename "$modifier")
+
+      if [[ -e ~/.config/hypr/active/$name ]]; then
+          echo "[x] $name"
+      else
+          echo "[ ] $name"
+      fi
+  done
+
+}
+
+# :command.function
+dot_hypr_activate_command() {
+
+  # src/hypr_activate_command.sh
+  modifiers=''
+  eval "modifiers=(${args[modifier]:-})"
+
+  if [ -z "$modifiers" ]; then
+      echo "No modifiers provided. Please specify at least one modifier to activate."
+      exit 1
+  fi
+
+  for mod in "${modifiers[@]}"; do
+      # add lua extension if not present
+      [[ "$mod" != *.lua ]] && mod="$mod.lua"
+      original="$HOME/.config/hypr/modifiers/$mod"
+      target="$HOME/.config/hypr/active/${mod%.*}.lua"
+
+      if [ -f "$target" ]; then
+          echo "$mod alrady active..."
+          continue
+      fi
+
+      if [ ! -f "$original" ]; then
+          echo "$mod not found in modifiers..."
+          continue
+      fi
+
+      ln -s $original $target
+
+      echo "activated: $original -> $target"
+
+  done
+
+}
+
+# :command.function
+dot_hypr_deactivate_command() {
+
+  # src/hypr_deactivate_command.sh
+  modifiers=''
+  eval "modifiers=(${args[modifier]:-})"
+
+  if [ -z "$modifiers" ]; then
+      echo "No modifiers provided. Please specify at least one modifier to activate."
+      exit 1
+  fi
+
+  for mod in "${modifiers[@]}"; do
+      # add lua extension if not present
+      [[ "$mod" != *.lua ]] && mod="$mod.lua"
+      target="$HOME/.config/hypr/active/${mod%.*}.lua"
+
+      if [ ! -f "$target" ]; then
+          echo "$mod not active..."
+          continue
+      fi
+
+      rm "$target"
+
+      echo "deactivated: $original -> $target"
+  done
+
+}
+
+# :command.function
+dot_hypr_toggle_command() {
+
+  # src/hypr_toggle_command.sh
+  modifiers=''
+  eval "modifiers=(${args[modifier]:-})"
+
+  if [ -z "$modifiers" ]; then
+      echo "No modifiers provided. Please specify at least one modifier to activate."
+      exit 1
+  fi
+
+  for mod in "${modifiers[@]}"; do
+      # add lua extension if not present
+      [[ "$mod" != *.lua ]] && mod="$mod.lua"
+
+      original="$HOME/.config/hypr/modifiers/$mod"
+      target="$HOME/.config/hypr/active/${mod%.*}"
+
+      if [ -f "$target" ]; then
+          rm "$target"
+          echo "$mod deactivated..."
+          continue
+      fi
+
+      if [ ! -f "$original" ]; then
+          echo "$mod not found in modifiers..."
+          continue
+      fi
+
+      ln -s $original $target
+
+      echo "activated: $original -> $target"
+
+  done
 
 }
 
@@ -386,6 +658,13 @@ parse_requirements() {
       action="tmux"
       shift
       dot_tmux_parse_requirements "$@"
+      shift $#
+      ;;
+
+    hypr)
+      action="hypr"
+      shift
+      dot_hypr_parse_requirements "$@"
       shift $#
       ;;
 
@@ -757,6 +1036,103 @@ dot_tmux_create_parse_requirements() {
       *)
         # :command.parse_requirements_case
         # :command.parse_requirements_case_simple
+        # :argument.case
+        if [[ -z ${args['dir']+x} ]]; then
+          args['dir']=$1
+          shift
+        else
+          printf "invalid argument: %s\n" "$key" >&2
+          exit 1
+        fi
+
+        ;;
+
+    esac
+  done
+
+}
+
+# :command.parse_requirements
+dot_hypr_parse_requirements() {
+  local key
+
+  # :command.fixed_flags_filter
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      --help | -h)
+        long_usage=yes
+        dot_hypr_usage
+        exit
+        ;;
+
+      *)
+        break
+        ;;
+
+    esac
+  done
+
+  # :command.command_filter
+  action=${1:-}
+
+  case $action in
+    -*) ;;
+
+    list)
+      action="list"
+      shift
+      dot_hypr_list_parse_requirements "$@"
+      shift $#
+      ;;
+
+    activate)
+      action="activate"
+      shift
+      dot_hypr_activate_parse_requirements "$@"
+      shift $#
+      ;;
+
+    deactivate)
+      action="deactivate"
+      shift
+      dot_hypr_deactivate_parse_requirements "$@"
+      shift $#
+      ;;
+
+    toggle)
+      action="toggle"
+      shift
+      dot_hypr_toggle_parse_requirements "$@"
+      shift $#
+      ;;
+
+    # :command.command_fallback
+    "")
+      dot_hypr_usage >&2
+      exit 1
+      ;;
+
+    *)
+      printf "invalid command: %s\n" "$action" >&2
+      exit 1
+      ;;
+
+  esac
+
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        # :command.parse_requirements_case
+        # :command.parse_requirements_case_simple
         printf "invalid argument: %s\n" "$key" >&2
         exit 1
 
@@ -764,6 +1140,242 @@ dot_tmux_create_parse_requirements() {
 
     esac
   done
+
+}
+
+# :command.parse_requirements
+dot_hypr_list_parse_requirements() {
+  local key
+
+  # :command.fixed_flags_filter
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      --help | -h)
+        long_usage=yes
+        dot_hypr_list_usage
+        exit
+        ;;
+
+      *)
+        break
+        ;;
+
+    esac
+  done
+
+  # :command.command_filter
+  action="hypr list"
+
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        # :command.parse_requirements_case
+        # :command.parse_requirements_case_simple
+        printf "invalid argument: %s\n" "$key" >&2
+        exit 1
+
+        ;;
+
+    esac
+  done
+
+}
+
+# :command.parse_requirements
+dot_hypr_activate_parse_requirements() {
+  local key
+
+  # :command.fixed_flags_filter
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      --help | -h)
+        long_usage=yes
+        dot_hypr_activate_usage
+        exit
+        ;;
+
+      *)
+        break
+        ;;
+
+    esac
+  done
+
+  # :command.command_filter
+  action="hypr activate"
+
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        # :command.parse_requirements_case
+        # :command.parse_requirements_case_repeatable
+        # :argument.case_repeatable
+        escaped="$(printf '%q' "$1")"
+        if [[ -z ${args['modifier']+x} ]]; then
+          args['modifier']="$escaped"
+          unique_lookup["modifier:$escaped"]=1
+        elif [[ -z "${unique_lookup["modifier:$escaped"]:-}" ]]; then
+          args['modifier']="${args['modifier']} $escaped"
+          unique_lookup["modifier:$escaped"]=1
+
+        fi
+        shift
+
+        ;;
+
+    esac
+  done
+
+  # :command.required_args_filter
+  if [[ -z ${args['modifier']+x} ]]; then
+    printf "missing required argument: MODIFIER\nusage: dot hypr activate MODIFIER...\n" >&2
+
+    exit 1
+  fi
+
+}
+
+# :command.parse_requirements
+dot_hypr_deactivate_parse_requirements() {
+  local key
+
+  # :command.fixed_flags_filter
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      --help | -h)
+        long_usage=yes
+        dot_hypr_deactivate_usage
+        exit
+        ;;
+
+      *)
+        break
+        ;;
+
+    esac
+  done
+
+  # :command.command_filter
+  action="hypr deactivate"
+
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        # :command.parse_requirements_case
+        # :command.parse_requirements_case_repeatable
+        # :argument.case_repeatable
+        escaped="$(printf '%q' "$1")"
+        if [[ -z ${args['modifier']+x} ]]; then
+          args['modifier']="$escaped"
+          unique_lookup["modifier:$escaped"]=1
+        elif [[ -z "${unique_lookup["modifier:$escaped"]:-}" ]]; then
+          args['modifier']="${args['modifier']} $escaped"
+          unique_lookup["modifier:$escaped"]=1
+
+        fi
+        shift
+
+        ;;
+
+    esac
+  done
+
+  # :command.required_args_filter
+  if [[ -z ${args['modifier']+x} ]]; then
+    printf "missing required argument: MODIFIER\nusage: dot hypr deactivate MODIFIER...\n" >&2
+
+    exit 1
+  fi
+
+}
+
+# :command.parse_requirements
+dot_hypr_toggle_parse_requirements() {
+  local key
+
+  # :command.fixed_flags_filter
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+      --help | -h)
+        long_usage=yes
+        dot_hypr_toggle_usage
+        exit
+        ;;
+
+      *)
+        break
+        ;;
+
+    esac
+  done
+
+  # :command.command_filter
+  action="hypr toggle"
+
+  # :command.parse_requirements_while
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+    case "$key" in
+
+      -?*)
+        printf "invalid option: %s\n" "$key" >&2
+        exit 1
+        ;;
+
+      *)
+        # :command.parse_requirements_case
+        # :command.parse_requirements_case_repeatable
+        # :argument.case_repeatable
+        escaped="$(printf '%q' "$1")"
+        if [[ -z ${args['modifier']+x} ]]; then
+          args['modifier']="$escaped"
+          unique_lookup["modifier:$escaped"]=1
+        elif [[ -z "${unique_lookup["modifier:$escaped"]:-}" ]]; then
+          args['modifier']="${args['modifier']} $escaped"
+          unique_lookup["modifier:$escaped"]=1
+
+        fi
+        shift
+
+        ;;
+
+    esac
+  done
+
+  # :command.required_args_filter
+  if [[ -z ${args['modifier']+x} ]]; then
+    printf "missing required argument: MODIFIER\nusage: dot hypr toggle MODIFIER...\n" >&2
+
+    exit 1
+  fi
 
 }
 
@@ -782,6 +1394,7 @@ run() {
   declare -g -A deps=()
   declare -g -a env_var_names=()
   declare -g -a input=()
+  declare -g -A unique_lookup=()
 
   normalize_input "$@"
   parse_requirements "${input[@]}"
@@ -793,6 +1406,11 @@ run() {
     "tmux") dot_tmux_command ;;
     "tmux project") dot_tmux_project_command ;;
     "tmux create") dot_tmux_create_command ;;
+    "hypr") dot_hypr_command ;;
+    "hypr list") dot_hypr_list_command ;;
+    "hypr activate") dot_hypr_activate_command ;;
+    "hypr deactivate") dot_hypr_deactivate_command ;;
+    "hypr toggle") dot_hypr_toggle_command ;;
   esac
 }
 

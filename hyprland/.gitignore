@@ -1,0 +1,2 @@
+.config/hypr/active/*
+!.config/hypr/active/sample.lua

@@ -11,13 +11,11 @@
         "hyprland/submap",
         "tray",
         "hyprland/language",
-        "group/volume",
-        "bluetooth",
+        "pulseaudio",
         "network",
         "cpu",
         "memory",
-        "custom/notify",
-        "clock#date"
+        "custom/notify"
     ],
     "hyprland/workspaces": {
         "format": "{name}",
@@ -45,13 +43,13 @@
         "interval": 10,
         "format": " {}%",
         "max-length": 10,
-        "on-click": "exec kitty --title=btop -e htop"
+        "on-click": "exec kitty --class popup-xl --title=btop -e btop"
     },
     "memory": {
         "interval": 30,
         "format": " {percentage}%",
         "tooltip-format": "{used:0.1f}G/{total:0.1f}G used",
-        "on-click": "exec kitty --title=htop -e htop"
+        "on-click": "exec kitty --class popup-xl --title=htop -e htop"
     },
     "network": {
         "format": "",
@@ -62,19 +60,15 @@
         "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip-format-ethernet": "{ifname} ",
         "tooltip-format-disconnected": "󰖪",
-        "max-length": 50,
-        "on-click": "exec htop"
+        "max-length": 50
     },
     "clock": {
         "interval": 1,
-        "format": "󰥔 {:%H:%M:%S}",
-    },
-    "clock#date": {
-        "format": "󰥔 {:%Y-%m-%d}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "format": "󰥔 {:%d %a %H:%M:%S}",
+        "tooltip-format": "{:%Y-%m-%d}",
     },
     "pulseaudio": {
-        "format": "{volume}% {icon}",
+        "format": "{icon} {volume}%",
         "format-muted": "",
         "format-icons": {
             "default": [

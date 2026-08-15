@@ -14,3 +14,11 @@ hl.device({
     name        = "epic-mouse-v1",
     sensitivity = -0.5,
 })
+
+hl.config({
+    cursor = {
+        default_monitor = MONITOR_PRIMARY_ID
+    }
+})
+
+
