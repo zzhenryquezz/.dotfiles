@@ -32,3 +32,6 @@ commands:
             repeatable: true
             unique: true
             help: modifier or list of modifiers
+
+    - name: vicinae
+      help: generate viccinae scripts for hyprland modifiers
