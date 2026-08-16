@@ -1,0 +1,2 @@
+.local/share/vicinae/scripts/*
+!.local/share/vicinae/scripts/.gitkeep
