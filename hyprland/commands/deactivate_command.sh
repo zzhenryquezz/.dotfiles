@@ -7,17 +7,10 @@ if [ -z "$modifiers" ]; then
 fi
 
 for mod in "${modifiers[@]}"; do
-    # add lua extension if not present
-    [[ "$mod" != *.lua ]] && mod="$mod.lua"
-    target="$HOME/.config/hypr/active/${mod%.*}.lua"
 
-
-    if [ ! -f "$target" ]; then
-        echo "$mod not active..."
-        continue
+    if deactivate_mod "$mod"; then
+        echo "Modifier '$mod' deactivated successfully."
+    else
+        echo "Failed to deactivate modifier '$mod': $error"
     fi
-
-    rm "$target"
-
-    echo "deactivated: $original -> $target"
 done

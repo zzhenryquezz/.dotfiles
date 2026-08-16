@@ -51,7 +51,7 @@ config_path: "bashly.yml"
 target_dir: .
 
 # The path to use for common library files, relative to source_dir
-lib_dir: lib
+lib_dir: ../lib
 
 # An array or comma delimited string of additional directories to search for
 # bash functions. Any bash script found in any of these directories

@@ -7,24 +7,16 @@ if [ -z "$modifiers" ]; then
 fi
 
 for mod in "${modifiers[@]}"; do
-    # add lua extension if not present
-    [[ "$mod" != *.lua ]] && mod="$mod.lua"
-    original="$HOME/.config/hypr/modifiers/$mod"
-    target="$HOME/.config/hypr/active/${mod%.*}.lua"
 
-
-    if [ -f "$target" ]; then
-        echo "$mod alrady active..."
+    if is_mod_active "$mod"; then
+        echo "Modifier '$mod' is already active."
         continue
     fi
 
-    if [ ! -f "$original" ]; then
-        echo "$mod not found in modifiers..."
-        continue
+    if activate_mod "$mod"; then
+        echo "Modifier '$mod' activated successfully."
+    else
+        echo "Failed to activate modifier '$mod': $error"
     fi
-
-    ln -s $original $target
-
-    echo "activated: $original -> $target"
 
 done
