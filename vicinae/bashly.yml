@@ -1,0 +1,7 @@
+name: vicinae
+help: viccinae commands
+version: 0.1.0
+
+commands:
+    - name: generate
+      help: generate scripts for dot files commands
