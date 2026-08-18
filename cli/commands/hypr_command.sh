@@ -1,2 +1,6 @@
-exec "$DOTFILES_DIR/hyprland/hypr" "${other_args[@]}"
+filename="$(realpath "$0")"
+dir="$(dirname "$filename")"
+root_dir="$(dirname "$dir")"
+
+exec $root_dir/hyprland/hypr" "${other_args[@]}"
 

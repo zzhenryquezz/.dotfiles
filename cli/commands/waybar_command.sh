@@ -1,2 +1,6 @@
-exec "$DOTFILES_DIR/waybar/waybar" "${other_args[@]}"
+filename="$(realpath "$0")"
+dir="$(dirname "$filename")"
+root_dir="$(dirname "$dir")"
+
+exec "$root_dir/waybar/waybar" "${other_args[@]}"
 

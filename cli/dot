@@ -192,7 +192,11 @@ inspect_args() {
 dot_waybar_command() {
 
   # commands/waybar_command.sh
-  exec "$DOTFILES_DIR/waybar/waybar" "${other_args[@]}"
+  filename="$(realpath "$0")"
+  dir="$(dirname "$filename")"
+  root_dir="$(dirname "$dir")"
+
+  exec "$root_dir/waybar/waybar" "${other_args[@]}"
 
 }
 
@@ -200,7 +204,11 @@ dot_waybar_command() {
 dot_tmux_command() {
 
   # commands/tmux_command.sh
-  exec "$DOTFILES_DIR/tmux/tmux" "${other_args[@]}"
+  filename="$(realpath "$0")"
+  dir="$(dirname "$filename")"
+  root_dir="$(dirname "$dir")"
+
+  exec "$root_dir/tmux/tmux" "${other_args[@]}"
 
 }
 
@@ -208,7 +216,11 @@ dot_tmux_command() {
 dot_hypr_command() {
 
   # commands/hypr_command.sh
-  exec "$DOTFILES_DIR/hyprland/hypr" "${other_args[@]}"
+  filename="$(realpath "$0")"
+  dir="$(dirname "$filename")"
+  root_dir="$(dirname "$dir")"
+
+  exec $root_dir/hyprland/hypr" "${other_args[@]}"
 
 }
 

@@ -1,2 +1,5 @@
-exec "$DOTFILES_DIR/tmux/tmux" "${other_args[@]}"
+filename="$(realpath "$0")"
+dir="$(dirname "$filename")"
+root_dir="$(dirname "$dir")"
 
+exec "$root_dir/tmux/tmux" "${other_args[@]}"
