@@ -41,7 +41,7 @@
     },
     "cpu": {
         "interval": 10,
-        "format": " {}%",
+        "format": " {usage}%",
         "max-length": 10,
         "on-click": "exec kitty --class popup-xl --title=btop -e btop"
     },
