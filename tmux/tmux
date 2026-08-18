@@ -26,7 +26,7 @@ tmux_usage() {
   echo
   # :command.usage_commands
   printf "%s\n" "Commands:"
-  printf "  %s   open project\n" "project"
+  printf "  %s   open project from projects folder\n" "project"
   printf "  %s   create a tmux session\n" "create "
   echo
 
@@ -48,7 +48,7 @@ tmux_usage() {
 
 # :command.usage
 tmux_project_usage() {
-  printf "tmux project - open project\n\n"
+  printf "tmux project - open project from projects folder\n\n"
 
   printf "%s\n" "Usage:"
   printf "  tmux project\n"
@@ -168,7 +168,9 @@ inspect_args() {
 tmux_project_command() {
 
   # commands/project_command.sh
-  #!/bin/bash
+  filename="$(realpath "$0")"
+  dir="$(dirname "$filename")"
+  root_dir="$(dirname "$dir")"
 
   PROJECTS_DIR="$HOME/git"
   SCRIPTS_DIR="$(dirname "$0")"
@@ -181,7 +183,7 @@ tmux_project_command() {
 
   [ -z "$selected" ] && exit 0
 
-  "$0" tmux create $PROJECTS_DIR/$selected
+  exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
 
 }
 

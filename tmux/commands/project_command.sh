@@ -1,4 +1,6 @@
-#!/bin/bash
+filename="$(realpath "$0")"
+dir="$(dirname "$filename")"
+root_dir="$(dirname "$dir")"
 
 PROJECTS_DIR="$HOME/git"
 SCRIPTS_DIR="$(dirname "$0")"
@@ -11,4 +13,4 @@ selected=$(
 
 [ -z "$selected" ] && exit 0
 
-tmux_create_command $PROJECTS_DIR/$selected
+exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
