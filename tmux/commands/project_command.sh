@@ -11,4 +11,4 @@ selected=$(
 
 [ -z "$selected" ] && exit 0
 
-"$0" tmux create $PROJECTS_DIR/$selected
+tmux_create_command $PROJECTS_DIR/$selected
