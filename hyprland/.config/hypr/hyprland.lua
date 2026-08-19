@@ -12,6 +12,7 @@ require("keybindings")
 require("keyboard")
 require("popups")
 require("misc")
+require("magnifier")
 
 -- modifiers
 require("./active/*")

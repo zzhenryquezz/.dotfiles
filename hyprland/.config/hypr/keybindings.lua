@@ -2,7 +2,6 @@
 ---- KEYBINDINGS ----
 ---------------------
 
-hl.bind(MAIN_MOD .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(MAIN_MOD .. " + Q", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. " + M",
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
@@ -11,6 +10,7 @@ hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(MAIN_MOD .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
 -- apps
+hl.bind(MAIN_MOD .. " + T", hl.dsp.exec_cmd("kitty"))
 hl.bind(MAIN_MOD .. " + E", hl.dsp.exec_cmd("kitty yazi"))
 hl.bind(MAIN_MOD .. " + I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/work inbox'"))
 hl.bind(MAIN_MOD .. " + O", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux project'"))
@@ -68,6 +68,6 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-
--- print
+-- misc
 hl.bind(MAIN_MOD .. " + CTRL + ALT + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(MAIN_MOD .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))

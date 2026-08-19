@@ -17,7 +17,8 @@ hl.device({
 
 hl.config({
     cursor = {
-        default_monitor = MONITOR_PRIMARY_ID
+        default_monitor = MONITOR_PRIMARY_ID,
+        inactive_timeout = 3
     }
 })
 
