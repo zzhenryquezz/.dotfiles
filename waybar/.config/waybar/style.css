@@ -1,36 +1,52 @@
 @import "mocha.css";
 
 * {
-	font-family: "JetBrainsMono Nerd Font Propo", san-serif;
-	font-size: 16px;
-	color: @text;
+    font-family: "JetBrainsMono Nerd Font Propo", san-serif;
+    font-size: 16px;
+    color: @text;
 }
 
 
 #waybar {
-	background: transparent;
+    background: transparent;
 }
 
 #workspaces {
-	border-radius: 6px;
-	margin: 5px 20px;
-	background-color: @surface0;
+    border-radius: 4px;
+    margin: 5px 20px;
+    background-color: @crust;
+    border: 2px solid @surface0;
 }
 
 #workspaces button {
-	padding: 0.4rem;
+    padding: 0.4rem;
+    border-bottom: 1px solid @sky;
+    border-radius: 0px;
+}
+
+#workspaces button.urgent {
+    color: @red;
+}
+
+#workspaces button.empty {
+    border-bottom: 0px solid @sky;
+}
+
+#workspaces button {
+    padding: 0.4rem;
+    color: @sky;
 }
 
 #workspaces button.workspace-hover {
-	background-color: @sky;
+    background-color: @sky;
 }
 
 #workspaces button.active {
-	background-color: @sky;
+    background-color: @sky;
 }
 
 #workspaces .active .workspace-label {
-	color: @surface0;
+    color: @crust;
 }
 
 
@@ -46,33 +62,51 @@
 #tray,
 #custom-notify,
 #network {
-	background-color: @surface0;
-	padding: 0 12px;
-	margin: 4px;
-	border-radius: 1rem;
+    background-color: @crust;
+    color: @text;
+    padding: 0 12px;
+    margin: 4px;
+    border: 2px solid @surface0;
+    border-radius: 4px;
 }
 
 #clock {
-	color: @sky;
+    color: @sky;
 }
 
 #clock.date {
-	color: @text;
+    color: @text;
 }
 
 #pulseaudio {
-	color: @mauve;
+    color: @mauve;
 }
 
 #custom-notify {
-	margin-right: 20px;
+    margin-right: 20px;
 }
 
 #tray menu {
-	background-color: @surface0;
+    background-color: @surface0;
 }
 
 #custom-notify.unread {
     color: @red;
 }
 
+#cpu,
+#memory,
+#network {
+    color: @teal;
+}
+
+#cpu.moderate,
+#memory.moderate {
+    color: @yellow;
+}
+
+#cpu.hight,
+#memory.hight,
+#network.disconnected {
+    color: @red;
+}
