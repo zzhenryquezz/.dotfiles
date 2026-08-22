@@ -17,9 +17,13 @@ hl.bind(MAIN_MOD .. " + O", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmu
 
 -- focus windows
 hl.bind(MAIN_MOD .. " + H", hl.dsp.focus({ direction = "left" }))
+hl.bind(MAIN_MOD .. " + LEFT", hl.dsp.focus({ direction = "left" }))
 hl.bind(MAIN_MOD .. " + L", hl.dsp.focus({ direction = "right" }))
+hl.bind(MAIN_MOD .. " + RIGHT", hl.dsp.focus({ direction = "right" }))
 hl.bind(MAIN_MOD .. " + K", hl.dsp.focus({ direction = "up" }))
+hl.bind(MAIN_MOD .. " + UP", hl.dsp.focus({ direction = "up" }))
 hl.bind(MAIN_MOD .. " + J", hl.dsp.focus({ direction = "down" }))
+hl.bind(MAIN_MOD .. " + DOWN", hl.dsp.focus({ direction = "down" }))
 
 -- swap window
 hl.bind(MAIN_MOD .. " + SHIFT + H", hl.dsp.window.swap({ direction = "left" }))
