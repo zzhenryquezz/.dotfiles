@@ -17,6 +17,7 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "jsonls",
+                    "cssls",
                     "ts_ls",
                     "html",
                     "vue_ls",

@@ -28,7 +28,7 @@ return {
             local result = results[selector]
 
             if result then
-                vim.fn.setreg("+", result) -- system clipboard 
+                vim.fn.setreg("+", result) -- system clipboard
                 vim.fn.setreg('"', result) -- default register
                 vim.notify("Copied: " .. result)
             else
@@ -40,7 +40,7 @@ return {
             close_if_last_window = true,
             autoselect_one = true,
             window = {
-                position = "current",
+                position = "right",
                 mappings = {
                     ["<leader>pa"] = function(state)
                         copy_selector(state, "absolute")
@@ -60,6 +60,8 @@ return {
                     ["<leader>pe"] = function(state)
                         copy_selector(state, "extension")
                     end,
+                    ["l"] = "open",
+                    ["h"] = "close_node",
                 },
             },
             filesystem = {
@@ -67,15 +69,15 @@ return {
                     enabled = true,
                     leave_dirs_open = true,
                 },
-                components = {
-                    name = function(config, node, state)
-                        local name = components.name(config, node, state)
-                        if node:get_depth() == 1 then
-                            name.text = vim.fs.basename(vim.loop.cwd() or "")
-                        end
-                        return name
-                    end,
-                },
+                -- components = {
+                --     name = function(config, node, state)
+                --         local name = components.name(config, node, state)
+                --         if node:get_depth() == 1 then
+                --             name.text = vim.fs.basename(vim.loop.cwd() or "")
+                --         end
+                --         return name
+                --     end,
+                -- },
                 filtered_items = {
                     hide_dotfiles = false,
                     visible = true,
