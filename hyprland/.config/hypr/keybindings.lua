@@ -6,14 +6,33 @@ hl.bind(MAIN_MOD .. " + Q", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. " + M",
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(MAIN_MOD .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo())
+-- hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(MAIN_MOD .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
--- apps
 hl.bind(MAIN_MOD .. " + T", hl.dsp.exec_cmd("kitty"))
-hl.bind(MAIN_MOD .. " + E", hl.dsp.exec_cmd("kitty yazi"))
-hl.bind(MAIN_MOD .. " + I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/work inbox'"))
-hl.bind(MAIN_MOD .. " + O", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux project'"))
+-- apps
+hl.bind(MAIN_MOD .. " + W", hl.dsp.submap("work"))
+hl.bind(MAIN_MOD .. " + P", hl.dsp.submap("personal"))
+
+hl.define_submap("work", "reset", function()
+    hl.bind("A", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/work atlas tui'"))
+    hl.bind("T", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux project'"))
+    hl.bind("E", hl.dsp.exec_cmd("kitty yazi ~/work"))
+    hl.bind("B", hl.dsp.exec_cmd("google-chrome-stable --profile-directory='Default'"))
+    hl.bind("I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/work inbox'"))
+
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
+
+hl.define_submap("personal", "reset", function()
+    hl.bind("A", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/kuro atlas tui'"))
+    hl.bind("T", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux create ~/kuro'"))
+    hl.bind("E", hl.dsp.exec_cmd("kitty yazi ~/kuro"))
+    hl.bind("B", hl.dsp.exec_cmd("google-chrome-stable --profile-directory='Profile 1'"))
+    hl.bind("I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/kuro inbox'"))
+
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
 
 -- focus windows
 hl.bind(MAIN_MOD .. " + H", hl.dsp.focus({ direction = "left" }))
