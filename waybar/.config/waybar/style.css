@@ -12,16 +12,20 @@
 }
 
 #workspaces {
-    border-radius: 4px;
     margin: 5px 20px;
-    background-color: @crust;
-    border: 2px solid @surface0;
 }
 
 #workspaces button {
     padding: 0.4rem;
-    border-bottom: 1px solid @sky;
+    margin: 0;
+    background-color: @crust;
+    border-color: @surface0;
+    border-style: solid;
+    border-bottom-width: 2px;
+    border-left-width: 0px;
+    border-right-width: 0px;
     border-radius: 0px;
+    border-bottom-color: @sky;
 }
 
 #workspaces button.urgent {
@@ -29,12 +33,7 @@
 }
 
 #workspaces button.empty {
-    border-bottom: 0px solid @sky;
-}
-
-#workspaces button {
-    padding: 0.4rem;
-    color: @sky;
+    border-bottom-color: @surface0;
 }
 
 #workspaces button.workspace-hover {
@@ -43,12 +42,25 @@
 
 #workspaces button.active {
     background-color: @sky;
+    border-color: @sky;
+    /* border-bottom-color: @sky; */
 }
 
 #workspaces .active .workspace-label {
     color: @crust;
 }
 
+#workspaces button:last-child {
+    border-right-width: 2px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#workspaces button:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-left-width: 2px;
+}
 
 #custom-music,
 #clock,
@@ -60,6 +72,7 @@
 #memory,
 #language,
 #tray,
+#submap,
 #custom-notify,
 #network {
     background-color: @crust;
@@ -108,5 +121,9 @@
 #cpu.hight,
 #memory.hight,
 #network.disconnected {
+    color: @red;
+}
+
+#submap {
     color: @red;
 }

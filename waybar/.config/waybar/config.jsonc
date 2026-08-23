@@ -2,13 +2,13 @@
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "modules-left": [
-        "hyprland/workspaces"
+        "hyprland/workspaces",
+        "hyprland/submap"
     ],
     "modules-center": [
         "clock"
     ],
     "modules-right": [
-        "hyprland/submap",
         "tray",
         "hyprland/language",
         "pulseaudio",
