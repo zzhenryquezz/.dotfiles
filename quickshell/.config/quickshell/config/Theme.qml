@@ -12,7 +12,12 @@ QtObject {
     readonly property color border: Mocha.surface0
 
     readonly property color secondary: Mocha.mauve
-    readonly property color danger: Mocha.red
 
-    readonly property int radius: 8
+    readonly property color danger: Mocha.red
+    readonly property color success: Mocha.teal
+    readonly property color warning: Mocha.yellow
+
+    readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
+
+    readonly property int radius: 4
 }
