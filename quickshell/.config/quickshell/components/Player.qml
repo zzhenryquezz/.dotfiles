@@ -10,6 +10,6 @@ RowLayout {
 
     Chip {
         icon: root.icon
-        text: root.player ? root.player.trackTitle : ""
+        text: root.player ? root.player.identity + " - " + root.player.trackTitle : ""
     }
 }

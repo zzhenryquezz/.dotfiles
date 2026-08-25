@@ -1,4 +1,3 @@
-// Bar.qml
 import Quickshell
 import QtQuick.Layouts
 import Quickshell.Io
@@ -71,6 +70,10 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
 
+        Pomo {
+            id: pomodoro
+        }
+
         Chip {
             icon: ""
             text: audio.volume + "%"
@@ -85,7 +88,7 @@ PanelWindow {
 
         Chip {
             icon: ""
-            text: cpu.usage + "%"
+            text: cpu.usage.toString().padStart(2, "0") + "%"
             textColor: cpu.usage > 50 ? (cpu.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
         }
 
