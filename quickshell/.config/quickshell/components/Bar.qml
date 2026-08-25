@@ -7,6 +7,7 @@ import QtQuick
 import Quickshell.Services.Mpris
 
 import "../config"
+import qs.services
 
 PanelWindow {
     id: bar
@@ -30,33 +31,24 @@ PanelWindow {
 
     implicitHeight: 40
 
-    Poller {
-        id: volume
-        command: "wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf \"%d\", $2*100}'"
-        interval: 1000
+    Audio {
+        id: audio
     }
 
-    Poller {
+    Network {
         id: network
-        command: "iwctl station wlan0 show | grep 'Connected network' | awk '{if ($3) print \"connected\"; else print \"not connected\"}'"
-        interval: 1000
     }
 
-    Poller {
+    Cpu {
         id: cpu
-        command: "top -bn1 | grep 'Cpu(s)' | awk '{printf \"%d\", $2+$4}'"
-        interval: 3000
     }
 
-    Poller {
+    Memory {
         id: memory
-        command: "free -m | awk 'NR==2{printf \"%d\", $3*100/$2 }'"
-        interval: 3000
     }
-    Poller {
-        id: keyboardLayout
-        command: "i=$(hyprctl devices -j | jq -r '.keyboards[] | select(.main) | .active_layout_index'); l=$(hyprctl getoption input:kb_layout -j | jq -r '.str' | cut -d, -f$((i+1))); v=$(hyprctl getoption input:kb_variant -j | jq -r '.str' | cut -d, -f$((i+1))); echo \"$l${v:+ $v}\""
-        interval: 1000
+
+    Keyboard {
+        id: keyboard
     }
 
     readonly property var player: Mpris.players.values.find(p => p.identity === "Spotify")
@@ -99,7 +91,6 @@ PanelWindow {
 
     RowLayout {
         anchors.right: parent.right
-        // anchors.rightMargin: 20
         anchors.verticalCenter: parent.verticalCenter
         spacing: 8
 
@@ -108,7 +99,7 @@ PanelWindow {
             implicitHeight: 38
             Text {
                 anchors.centerIn: parent
-                text: " " + volume.value + "%"
+                text: " " + audio.volume + "%"
                 font.family: Theme.fontFamily
                 font.pixelSize: 16
                 color: Theme.foreground
@@ -116,7 +107,8 @@ PanelWindow {
         }
 
         Pill {
-            implicitWidth: keyboardLayout.value.length * 10 + 52
+            implicitWidth: keyboard.layoutDescriptionShort.length * 10 + 52
+            // implicitWidth: 200
             implicitHeight: 38
 
             Process {
@@ -126,7 +118,7 @@ PanelWindow {
 
             Text {
                 anchors.centerIn: parent
-                text: " " + keyboardLayout.value
+                text: " " + keyboard.layoutDescriptionShort
                 font.family: Theme.fontFamily
                 font.pixelSize: 16
                 color: Theme.foreground
@@ -147,7 +139,7 @@ PanelWindow {
                 text: ""
                 font.family: Theme.fontFamily
                 font.pixelSize: 16
-                color: network.value === "connected" ? Theme.success : Theme.danger
+                color: network.connected ? Theme.success : Theme.danger
             }
         }
 
@@ -156,10 +148,10 @@ PanelWindow {
             implicitHeight: 38
             Text {
                 anchors.centerIn: parent
-                text: " " + cpu.value + "%"
+                text: " " + cpu.usage + "%"
                 font.family: Theme.fontFamily
                 font.pixelSize: 16
-                color: cpu.value > 50 ? (cpu.value > 80 ? Theme.danger : Theme.warning) : Theme.success
+                color: cpu.usage > 50 ? (cpu.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
             }
         }
 
@@ -168,10 +160,10 @@ PanelWindow {
             implicitHeight: 38
             Text {
                 anchors.centerIn: parent
-                text: " " + memory.value + "%"
+                text: " " + memory.usage + "%"
                 font.family: Theme.fontFamily
                 font.pixelSize: 16
-                color: memory.value > 50 ? (memory.value > 80 ? Theme.danger : Theme.warning) : Theme.success
+                color: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
             }
         }
     }
