@@ -65,6 +65,14 @@ tmux_project_usage() {
     printf "    Show this help\n"
     echo
 
+    # :command.usage_environment_variables
+    printf "%s\n" "Environment Variables:"
+
+    # :environment_variable.usage
+    printf "  %s\n" "TMUX_PROJECT_DIR (required)"
+    printf "    path to the projects folder\n"
+    echo
+
   fi
 }
 
@@ -163,6 +171,86 @@ inspect_args() {
   fi
 }
 
+# :command.user_lib
+# commands/lib/logger.sh
+LOG_CONTEXT="${LOG_CONTEXT:-{}}"
+
+log_add_context() {
+    for arg in "$@"; do
+        local key="${arg%%=*}"
+        local value="${arg#*=}"
+
+        LOG_CONTEXT=$(jq \
+            --arg key "$key" \
+            --arg value "$value" \
+            '. + {($key): $value}' \
+            <<<"$LOG_CONTEXT")
+    done
+}
+
+log_remove_context() {
+    for key in "$@"; do
+        LOG_CONTEXT=$(jq \
+            --arg key "$key" \
+            'del(.[$key])' \
+            <<<"$LOG_CONTEXT")
+    done
+}
+
+log() {
+    local timestamp
+    timestamp=$(date -Iseconds)
+
+    local level="$1"
+    local message="$2"
+    shift 2
+
+    local extra="$LOG_CONTEXT"
+
+    while (($#)); do
+        local key="${1%%=*}"
+        local value="${1#*=}"
+
+        extra=$(jq \
+            --arg key "$key" \
+            --arg value "$value" \
+            '. + {($key): $value}' \
+            <<<"$extra")
+
+        shift
+    done
+
+    line=$(jq -cn \
+        --arg time "$timestamp" \
+        --arg level "$level" \
+        --arg message "$message" \
+        --argjson extra "$extra" \
+        '{
+            time: $time,
+            level: $level,
+            message: $message
+        } + $extra'
+    )
+
+    echo "$line"
+
+    if [[ -n "$LOG_FILE" ]]; then
+        echo "$line" >>"$LOG_FILE"
+    fi
+}
+
+log_info() {
+    log "info" "$@"
+}
+
+log_error() {
+    log "error" "$@"
+}
+
+log_warn() {
+    log "warn" "$@"
+}
+
 # :command.command_functions
 # :command.function
 tmux_project_command() {
@@ -172,18 +260,40 @@ tmux_project_command() {
   dir="$(dirname "$filename")"
   root_dir="$(dirname "$dir")"
 
-  PROJECTS_DIR="$HOME/git"
-  SCRIPTS_DIR="$(dirname "$0")"
+  dirs=()
+
+  IFS=: read -ra dirs <<< "$TMUX_PROJECT_DIR"
+
+  if [ ${#dirs[@]} -eq 0 ]; then
+      log_error "dirs is empty"
+      exit 1
+  fi
 
   selected=$(
-          find "$PROJECTS_DIR" -mindepth 3 -maxdepth 3 -type d \
-          | sed "s|^$PROJECTS_DIR/||" \
-          | fzf --prompt="Select repository: "
+      for project in "${dirs[@]}"; do
+          root="${project%%=*}"
+          depth="${project##*=}"
+          name="$(basename "$root")"
+
+          find "$root" \
+              -mindepth "$depth" \
+              -maxdepth "$depth" \
+              -type d ! \
+              -name .git |
+          while read -r path; do
+              relative="${path#"$root"/}"
+              printf '%s\t%s\n' "$name/$relative" "$path"
+          done
+      done |
+          fzf --with-nth=1 --prompt="select a project: " |
+          cut -f2
   )
 
   [ -z "$selected" ] && exit 0
 
-  exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
+  echo "Selected project: $selected"
+
+  # exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
 
 }
 
@@ -340,6 +450,14 @@ tmux_project_parse_requirements() {
 
     esac
   done
+
+  # :command.environment_variables_filter
+
+  env_var_names+=("TMUX_PROJECT_DIR")
+  if [[ -z "${TMUX_PROJECT_DIR:-}" ]]; then
+    printf "missing required environment variable: TMUX_PROJECT_DIR\n" >&2
+    exit 1
+  fi
 
   # :command.command_filter
   action="project"

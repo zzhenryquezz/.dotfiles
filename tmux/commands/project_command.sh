@@ -2,15 +2,37 @@ filename="$(realpath "$0")"
 dir="$(dirname "$filename")"
 root_dir="$(dirname "$dir")"
 
-PROJECTS_DIR="$HOME/git"
-SCRIPTS_DIR="$(dirname "$0")"
+dirs=()
+
+IFS=: read -ra dirs <<< "$TMUX_PROJECT_DIR"
+
+if [ ${#dirs[@]} -eq 0 ]; then
+    log_error "dirs is empty"
+    exit 1
+fi
 
 selected=$(
-        find "$PROJECTS_DIR" -mindepth 3 -maxdepth 3 -type d \
-        | sed "s|^$PROJECTS_DIR/||" \
-        | fzf --prompt="Select repository: "
+    for project in "${dirs[@]}"; do
+        root="${project%%=*}"
+        depth="${project##*=}"
+        name="$(basename "$root")"
+
+        find "$root" \
+            -mindepth "$depth" \
+            -maxdepth "$depth" \
+            -type d ! \
+            -name .git |
+        while read -r path; do
+            relative="${path#"$root"/}"
+            printf '%s\t%s\n' "$name/$relative" "$path"
+        done
+    done |
+        fzf --with-nth=1 --prompt="select a project: " |
+        cut -f2
 )
 
 [ -z "$selected" ] && exit 0
 
-exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
+echo "Selected project: $selected"
+
+# exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
