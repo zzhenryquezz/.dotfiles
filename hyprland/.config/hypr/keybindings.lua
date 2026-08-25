@@ -3,36 +3,13 @@
 ---------------------
 
 hl.bind(MAIN_MOD .. " + Q", hl.dsp.window.close())
-hl.bind(MAIN_MOD .. " + M",
+hl.bind(MAIN_MOD .. " + ESCAPE",
     hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(MAIN_MOD .. " + V", hl.dsp.window.float({ action = "toggle" }))
 -- hl.bind(MAIN_MOD .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(MAIN_MOD .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
 hl.bind(MAIN_MOD .. " + T", hl.dsp.exec_cmd("kitty"))
--- apps
-hl.bind(MAIN_MOD .. " + W", hl.dsp.submap("work"))
-hl.bind(MAIN_MOD .. " + P", hl.dsp.submap("personal"))
-
-hl.define_submap("work", "reset", function()
-    hl.bind("A", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/work atlas tui'"))
-    hl.bind("T", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux project'"))
-    hl.bind("E", hl.dsp.exec_cmd("kitty yazi ~/work"))
-    hl.bind("B", hl.dsp.exec_cmd("google-chrome-stable --profile-directory='Default'"))
-    hl.bind("I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/work inbox'"))
-
-    hl.bind("escape", hl.dsp.submap("reset"))
-end)
-
-hl.define_submap("personal", "reset", function()
-    hl.bind("A", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/kuro atlas tui'"))
-    hl.bind("T", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux create ~/kuro'"))
-    hl.bind("E", hl.dsp.exec_cmd("kitty yazi ~/kuro"))
-    hl.bind("B", hl.dsp.exec_cmd("google-chrome-stable --profile-directory='Profile 1'"))
-    hl.bind("I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/kuro inbox'"))
-
-    hl.bind("escape", hl.dsp.submap("reset"))
-end)
 
 -- focus windows
 hl.bind(MAIN_MOD .. " + H", hl.dsp.focus({ direction = "left" }))
@@ -94,3 +71,41 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 -- misc
 hl.bind(MAIN_MOD .. " + CTRL + ALT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(MAIN_MOD .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+
+-- apps
+hl.bind(MAIN_MOD .. " + W", hl.dsp.submap("work"))
+hl.bind(MAIN_MOD .. " + P", hl.dsp.submap("personal"))
+
+hl.define_submap("work", "reset", function()
+    hl.bind("A", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/work atlas tui'"))
+    hl.bind("T", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux project'"))
+    hl.bind("E", hl.dsp.exec_cmd("kitty yazi ~/work"))
+    hl.bind("B", hl.dsp.exec_cmd("google-chrome-stable --profile-directory='Default'"))
+    hl.bind("I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/work inbox'"))
+
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
+
+hl.define_submap("personal", "reset", function()
+    hl.bind("A", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/kuro atlas tui'"))
+    hl.bind("T", hl.dsp.exec_cmd("kitty zsh -lc '~/.local/bin/dot tmux create ~/kuro'"))
+    hl.bind("E", hl.dsp.exec_cmd("kitty yazi ~/kuro"))
+    hl.bind("B", hl.dsp.exec_cmd("google-chrome-stable --profile-directory='Profile 1'"))
+    hl.bind("I", hl.dsp.exec_cmd("kitty --class popup-xl sh -lc '~/.local/bin/kuro inbox'"))
+
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
+
+
+-- media commands
+hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("music"))
+hl.define_submap("music", function()
+    hl.bind("SHIFT + P", hl.dsp.exec_cmd("playerctl -p spotify play-pause"), { locked = true })
+    hl.bind("P", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+
+    hl.bind("SHIFT + L", hl.dsp.exec_cmd("playerctl -p spotify next"), { locked = true })
+    hl.bind("SHIFT + H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { locked = true })
+
+    hl.bind("Q", hl.dsp.submap("reset"))
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
