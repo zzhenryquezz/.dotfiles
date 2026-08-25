@@ -9,11 +9,14 @@ vim.cmd("set smartindent")
 vim.cmd("set autoindent")
 
 vim.cmd("set signcolumn=yes")
-vim.cmd("set spelllang=en_us,pt_br")
-vim.cmd("set spell")
 vim.cmd("set relativenumber")
 vim.cmd("set cursorline")
 vim.cmd("set list")
 vim.cmd("set lcs+=space:·")
 
 vim.cmd("set mouse=")
+
+vim.cmd("set spelllang=en_us,pt_br")
+vim.cmd("set spell")
+vim.opt.spelloptions:append("camel") -- Ignora partes de camelCase
+
