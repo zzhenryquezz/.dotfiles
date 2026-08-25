@@ -28,7 +28,6 @@ PanelWindow {
         bottom: 0
     }
 
-
     implicitHeight: 40
 
     Audio {
@@ -47,124 +46,53 @@ PanelWindow {
         id: memory
     }
 
-    Keyboard {
-        id: keyboard
-    }
-
-    readonly property var player: Mpris.players.values.find(p => p.identity === "Spotify")
-
     RowLayout {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
+        spacing: 4
 
-        BarWorkspace {}
-
-        Pill {
-            visible: bar.player !== undefined
-            implicitWidth: 200
-            implicitHeight: 38
-            Text {
-                anchors.centerIn: parent
-                text: " " + bar.player.trackTitle
-                width: parent.width - 20
-                elide: Text.ElideRight
-                font.family: Theme.fontFamily
-                font.pixelSize: 16
-                color: Theme.success
-            }
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: {
-                    if (bar.player) {
-                        bar.player.togglePlaying()
-                    }
-                }
-            }
+        Workspace {
+            height: bar.implicitHeight
         }
+
+        Player {
+            height: bar.implicitHeight
+        }
+
+        Submap {}
     }
 
-    BarClock {
+    Clock {
         anchors.centerIn: parent
     }
 
     RowLayout {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        spacing: 8
+        spacing: 4
 
-        Pill {
-            implicitWidth: 80
-            implicitHeight: 38
-            Text {
-                anchors.centerIn: parent
-                text: " " + audio.volume + "%"
-                font.family: Theme.fontFamily
-                font.pixelSize: 16
-                color: Theme.foreground
-            }
+        Chip {
+            icon: ""
+            text: audio.volume + "%"
         }
 
-        Pill {
-            implicitWidth: keyboard.layoutDescriptionShort.length * 10 + 52
-            // implicitWidth: 200
-            implicitHeight: 38
+        KeyboardLayout {}
 
-            Process {
-                id: layoutSwitch
-                command: ["hyprctl", "switchxkblayout", "all", "next"]
-            }
-
-            Text {
-                anchors.centerIn: parent
-                text: " " + keyboard.layoutDescriptionShort
-                font.family: Theme.fontFamily
-                font.pixelSize: 16
-                color: Theme.foreground
-            }
-
-            MouseArea {
-                anchors.fill: parent
-
-                onClicked: layoutSwitch.startDetached()
-            }
+        Chip {
+            icon: ""
+            textColor: network.connected ? Theme.success : Theme.danger
         }
 
-        Pill {
-            implicitWidth: 38
-            implicitHeight: 38
-            Text {
-                anchors.centerIn: parent
-                text: ""
-                font.family: Theme.fontFamily
-                font.pixelSize: 16
-                color: network.connected ? Theme.success : Theme.danger
-            }
+        Chip {
+            icon: ""
+            text: cpu.usage + "%"
+            textColor: cpu.usage > 50 ? (cpu.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
         }
 
-        Pill {
-            implicitWidth: 80
-            implicitHeight: 38
-            Text {
-                anchors.centerIn: parent
-                text: " " + cpu.usage + "%"
-                font.family: Theme.fontFamily
-                font.pixelSize: 16
-                color: cpu.usage > 50 ? (cpu.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
-            }
-        }
-
-        Pill {
-            implicitWidth: 80
-            implicitHeight: 38
-            Text {
-                anchors.centerIn: parent
-                text: " " + memory.usage + "%"
-                font.family: Theme.fontFamily
-                font.pixelSize: 16
-                color: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
-            }
+        Chip {
+            icon: ""
+            text: memory.usage + "%"
+            textColor: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
         }
     }
 }

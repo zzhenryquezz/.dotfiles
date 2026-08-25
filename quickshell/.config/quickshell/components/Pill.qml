@@ -10,5 +10,4 @@ Rectangle {
     border.color: Theme.border
     border.width: 2
     radius: Theme.radius
-
 }
