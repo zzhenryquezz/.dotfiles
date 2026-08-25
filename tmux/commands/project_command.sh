@@ -33,6 +33,4 @@ selected=$(
 
 [ -z "$selected" ] && exit 0
 
-echo "Selected project: $selected"
-
-# exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
+exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
