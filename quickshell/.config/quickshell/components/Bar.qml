@@ -59,6 +59,10 @@ PanelWindow {
         }
 
         Submap {}
+
+        Pomo {
+            id: pomodoro
+        }
     }
 
     Clock {
@@ -70,9 +74,6 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
 
-        Pomo {
-            id: pomodoro
-        }
 
         Chip {
             icon: ""

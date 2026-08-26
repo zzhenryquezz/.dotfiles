@@ -13,11 +13,19 @@ BarItem {
     implicitWidth: content.width + 32
     implicitHeight: content.height + 16
 
+    property string blickColor: Theme.foreground
     property string pomoColor: pomodoro.isRunning ? (pomodoro.isDue ? Theme.danger : Theme.success) : Theme.foreground
-    property string iconColor: pomoColor
+    property string textColor: pomodoro.isDue ? blickColor : pomoColor
 
     Pomodoro {
         id: pomodoro
+    }
+
+    PomoPanel {
+        id: panel
+        visible: false
+        pomodoro: pomodoro
+        x: root.x + 20
     }
 
     Timer {
@@ -25,7 +33,7 @@ BarItem {
         running: pomodoro.isDue
         repeat: true
         onTriggered: {
-            root.iconColor = iconColor === root.pomoColor ? Theme.danger : root.pomoColor
+            root.blickColor = root.blickColor == Theme.danger ? Theme.foreground : Theme.danger;
         }
     }
 
@@ -37,45 +45,18 @@ BarItem {
 
         BText {
             text: ""
-            color: root.iconColor
+            color: root.textColor
         }
 
         BText {
             text: pomodoro.text
-            color: root.pomoColor
+            color: root.textColor
         }
 
-        BText {
-            visible: !pomodoro.isRunning
-            color: root.pomoColor
-            text: ""
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: pomodoro.toggleMode()
-            }
-        }
-
-        BText {
-            visible: !pomodoro.isRunning
-            color: root.pomoColor
-            text: ""
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: pomodoro.start()
-            }
-        }
-
-        BText {
-            visible: pomodoro.isRunning
-            color: root.pomoColor
-            text: ""
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: pomodoro.close()
-            }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: panel.visible = !panel.visible
         }
     }
 }

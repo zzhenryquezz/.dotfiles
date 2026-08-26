@@ -19,5 +19,5 @@ QtObject {
 
     readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
 
-    readonly property int radius: 4
+    readonly property int radius: 12
 }

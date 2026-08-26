@@ -8,8 +8,9 @@ Scope {
     property int breakDuration: 5
 
     property bool isRunning: timer.isRunning
-    property bool isDue: timer.remainingTime < 0
+    property bool isDue: timer.isRunning && timer.remainingTime <= 0
 
+    readonly property int remainingTime: timer.remainingTime
     property string text: timer.text
     property string identifier: "session"
 
@@ -17,6 +18,9 @@ Scope {
         id: timer
     }
 
+    Component.onCompleted: {
+        timer.durationInMilliseconds = root.sessionDuration * 60 * 1000;
+    }
 
     function start() {
         timer.start();
