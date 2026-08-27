@@ -74,6 +74,9 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
 
+        UpdateCheck {
+            height: bar.implicitHeight
+        }
 
         Chip {
             icon: ""
@@ -98,5 +101,6 @@ PanelWindow {
             text: memory.usage + "%"
             textColor: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
         }
+
     }
 }
