@@ -14,5 +14,7 @@ require("popups")
 require("misc")
 require("magnifier")
 
+require("./modules/*")
+
 -- modifiers
 require("./active/*")

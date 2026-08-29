@@ -42,9 +42,6 @@ for i = 1, 10 do
     hl.bind(MAIN_MOD .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Example special workspace (scratchpad)
-hl.bind(MAIN_MOD .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(MAIN_MOD .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Move/resize windows with MAIN_MOD + LMB/RMB and dragging
 hl.bind(MAIN_MOD .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
@@ -99,13 +96,36 @@ end)
 
 -- media commands
 hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("music"))
-hl.define_submap("music", function()
-    hl.bind("SHIFT + P", hl.dsp.exec_cmd("playerctl -p spotify play-pause"), { locked = true })
-    hl.bind("P", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 
-    hl.bind("SHIFT + L", hl.dsp.exec_cmd("playerctl -p spotify next"), { locked = true })
-    hl.bind("SHIFT + H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { locked = true })
+hl.define_submap("music", "reset", function()
+    hl.bind("P", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+    hl.bind("Q", hl.dsp.submap("reset"))
+    hl.bind("escape", hl.dsp.submap("reset"))
+end)
+
+-- spotify commands
+hl.bind(MAIN_MOD .. " + A", hl.dsp.submap("apps"))
+
+hl.define_submap("apps", "reset", function()
+
+    hl.bind("S", hl.dsp.submap("spotify"))
+
+    hl.define_submap("spotify", "reset", function()
+        hl.bind("SPACE", hl.dsp.exec_cmd("playerctl -p spotify play-pause"), { locked = true })
+        hl.bind("L", hl.dsp.exec_cmd("playerctl -p spotify next"), { locked = true })
+        hl.bind("N", hl.dsp.exec_cmd("playerctl -p spotify next"), { locked = true })
+        hl.bind("H", hl.dsp.exec_cmd("playerctl -p spotify previous"), { locked = true })
+        hl.bind("P", hl.dsp.exec_cmd("playerctl -p spotify previous"), { locked = true })
+        hl.bind("Q", hl.dsp.submap("reset"))
+        hl.bind("escape", hl.dsp.submap("reset"))
+    end)
 
     hl.bind("Q", hl.dsp.submap("reset"))
     hl.bind("escape", hl.dsp.submap("reset"))
 end)
+
+-- Example special workspace (scratchpad)
+hl.bind(MAIN_MOD .. " + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(MAIN_MOD .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(MAIN_MOD .. " + D", hl.dsp.workspace.toggle_special("magic2"))
+hl.bind(MAIN_MOD .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:magic2" }))
