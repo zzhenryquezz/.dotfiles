@@ -94,15 +94,6 @@ hl.define_submap("personal", "reset", function()
 end)
 
 
--- media commands
-hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("music"))
-
-hl.define_submap("music", "reset", function()
-    hl.bind("P", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-    hl.bind("Q", hl.dsp.submap("reset"))
-    hl.bind("escape", hl.dsp.submap("reset"))
-end)
-
 -- spotify commands
 hl.bind(MAIN_MOD .. " + A", hl.dsp.submap("apps"))
 

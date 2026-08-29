@@ -20,8 +20,8 @@ selected=$(
         find "$root" \
             -mindepth "$depth" \
             -maxdepth "$depth" \
-            -type d ! \
-            -name .git |
+            -type d \
+            ! -name .git |
         while read -r path; do
             relative="${path#"$root"/}"
             printf '%s\t%s\n' "$name/$relative" "$path"

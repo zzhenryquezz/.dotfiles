@@ -1,6 +1,5 @@
------------------------
----- LAUNCHER ---------
------------------------
+-- VICINAE 
+-- config vicinae app launcher
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("vicinae server")
@@ -25,4 +24,3 @@ hl.layer_rule({
 hl.bind(MAIN_MOD .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
 hl.bind(MAIN_MOD .. " + R", hl.dsp.exec_cmd("vicinae vicinae://launch/system/run"))
 hl.bind(MAIN_MOD .. " + C", hl.dsp.exec_cmd("vicinae vicinae://launch/clipboard/history"))
-

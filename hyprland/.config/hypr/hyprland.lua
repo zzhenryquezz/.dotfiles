@@ -5,7 +5,6 @@ MONITOR_SECONDARY_ID = "HDMI-A-1"
 
 -- imports
 require("monitors")
-require("launcher")
 require("look")
 require("cursor")
 require("keybindings")
