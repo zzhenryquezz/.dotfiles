@@ -41,6 +41,7 @@ return {
             autoselect_one = true,
             window = {
                 position = "right",
+                width = "40%",
                 mappings = {
                     ["<leader>pa"] = function(state)
                         copy_selector(state, "absolute")
