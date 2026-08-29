@@ -7,11 +7,18 @@ Scope {
     property string command: ""
     property string value: ""
     property int interval: 1000
+    property bool running: false
+
+    Component.onCompleted: {
+        if (root.command) {
+            proc.running = true;
+        }
+    }
 
     Process {
         id: proc
         command: ["sh", "-c", root.command]
-        running: true
+        running: root.running
         stdout: StdioCollector {
             onStreamFinished: root.value = this.text.trim()
         }

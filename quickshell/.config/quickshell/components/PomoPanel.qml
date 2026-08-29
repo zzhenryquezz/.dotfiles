@@ -21,27 +21,30 @@ PanelWindow {
     property real x: 0
     property real y: 0
 
-    readonly property int contentWidth: Math.max(header.implicitWidth, timeText.implicitWidth,
-                                                 feedbackText.implicitWidth,
-                                                 controls.buttonWidth * 2 + controls.spacing)
+    property bool hovered: false
+
+    readonly property int contentWidth: Math.max(header.implicitWidth, timeText.implicitWidth, feedbackText.implicitWidth, controls.buttonWidth * 2 + controls.spacing)
     readonly property bool hasPomodoro: root.pomodoro !== null
     readonly property bool isBreak: root.hasPomodoro && root.pomodoro.identifier === "break"
-    readonly property int phaseDuration: root.hasPomodoro
-        ? (root.isBreak ? root.pomodoro.breakDuration : root.pomodoro.sessionDuration) * 60
-        : 0
-    readonly property real progress: !root.hasPomodoro || !root.pomodoro.isRunning || root.phaseDuration <= 0
-        ? 0
-        : Math.min(1, Math.max(0, 1 - Math.max(0, root.pomodoro.remainingTime) / root.phaseDuration))
+    readonly property int phaseDuration: root.hasPomodoro ? (root.isBreak ? root.pomodoro.breakDuration : root.pomodoro.sessionDuration) * 60 : 0
+    readonly property real progress: !root.hasPomodoro || !root.pomodoro.isRunning || root.phaseDuration <= 0 ? 0 : Math.min(1, Math.max(0, 1 - Math.max(0, root.pomodoro.remainingTime) / root.phaseDuration))
     readonly property color phaseColor: root.isBreak ? Theme.success : Theme.primary
 
     function updatePosition() {
-        margins.left = root.x
-        margins.top = root.y
+        margins.left = root.x;
+        margins.top = root.y;
     }
 
     onVisibleChanged: {
         if (visible) {
             updatePosition();
+        }
+    }
+
+    HoverHandler {
+        target: content
+        onHoveredChanged: {
+            root.hovered = hovered;
         }
     }
 
@@ -74,9 +77,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: root.isBreak
-                            ? "Take a moment to recharge"
-                            : "Keep your attention on one task"
+                        text: root.isBreak ? "Take a moment to recharge" : "Keep your attention on one task"
                         color: Theme.foreground
                         opacity: 0.65
                         font.family: Theme.fontFamily
@@ -117,10 +118,7 @@ PanelWindow {
             Text {
                 id: feedbackText
                 horizontalAlignment: Text.AlignHCenter
-                text: !root.hasPomodoro ? "Timer unavailable"
-                    : root.pomodoro.isDue ? "Time is up — start the next phase when ready."
-                    : root.pomodoro.isRunning ? "Timer is running."
-                    : "Ready to start a " + (root.isBreak ? "break" : "focus session") + "."
+                text: !root.hasPomodoro ? "Timer unavailable" : root.pomodoro.isDue ? "Time is up — start the next phase when ready." : root.pomodoro.isRunning ? "Timer is running." : "Ready to start a " + (root.isBreak ? "break" : "focus session") + "."
                 color: root.pomodoro && root.pomodoro.isDue ? Theme.danger : Theme.foreground
                 opacity: root.pomodoro && root.pomodoro.isDue ? 1 : 0.7
                 font.family: Theme.fontFamily
@@ -168,9 +166,7 @@ PanelWindow {
                     Text {
                         id: actionText
                         anchors.centerIn: parent
-                        text: root.pomodoro && root.pomodoro.isRunning
-                            ? (root.pomodoro.isDue ? "󰒭  Next phase" : "󰅖  End session")
-                            : "  Start"
+                        text: root.pomodoro && root.pomodoro.isRunning ? (root.pomodoro.isDue ? "󰒭  Next phase" : "󰅖  End session") : "  Start"
                         color: Theme.primaryForeground
                         font.family: Theme.fontFamily
                         font.pixelSize: 11

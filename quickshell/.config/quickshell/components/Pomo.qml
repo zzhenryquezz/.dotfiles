@@ -23,9 +23,18 @@ BarItem {
 
     PomoPanel {
         id: panel
-        visible: false
         pomodoro: pomodoro
         x: root.x + 20
+        visible: false
+        function updateVisibility() {
+            if (hoverHandler.hovered || hovered) {
+                visible = true;
+                hideTimer.stop();
+            } else {
+                hideTimer.restart();
+            }
+        }
+        onHoveredChanged: updateVisibility()
     }
 
     Timer {
@@ -34,6 +43,24 @@ BarItem {
         repeat: true
         onTriggered: {
             root.blickColor = root.blickColor == Theme.danger ? Theme.foreground : Theme.danger;
+        }
+    }
+
+    HoverHandler {
+        id: hoverHandler
+        target: content
+        cursorShape: Qt.PointingHandCursor
+        onHoveredChanged: panel.updateVisibility()
+    }
+
+    Timer {
+        id: hideTimer
+        interval: 200
+        repeat: false
+
+        onTriggered: {
+            if (!root.hovered && !panel.hovered)
+                panel.visible = false;
         }
     }
 
@@ -53,10 +80,16 @@ BarItem {
             color: root.textColor
         }
 
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: panel.visible = !panel.visible
-        }
+        // MouseArea {
+        //     anchors.fill: parent
+        //     cursorShape: Qt.PointingHandCursor
+        //     onHoveredChanged: {
+        //         if (this.hovered) {
+        //             panel.visible = true;
+        //         } else {
+        //             panel.visible = false;
+        //         }
+        //     }
+        // }
     }
 }

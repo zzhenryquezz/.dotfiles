@@ -9,7 +9,8 @@ Chip {
     id: root
     property var updates: []
     property int lastUpdateAt: 0
-    property bool updatesLoaded: false
+    property bool updatesLoaded: updateCheck.running === false
+    property string lastUpdateText: root.lastUpdateAt > 0 ? "Last updated " + Qt.formatDateTime(new Date(root.lastUpdateAt * 1000), "yyyy-MM-dd") : "Last update date unavailable"
     property color updateColor: {
         if (root.lastUpdateAt <= 0) {
             return Theme.foreground;
@@ -18,13 +19,20 @@ Chip {
         const ageInDays = (Date.now() / 1000 - root.lastUpdateAt) / 86400;
         return ageInDays < 7 ? Theme.success : ageInDays < 30 ? Theme.warning : Theme.danger;
     }
-    property string lastUpdateText: root.lastUpdateAt > 0
-        ? "Last updated " + Qt.formatDateTime(new Date(root.lastUpdateAt * 1000), "yyyy-MM-dd")
-        : "Last update date unavailable"
 
     icon: "󰏗"
-    text: root.updatesLoaded ? root.updates.length.toString() : "..."
     textColor: root.updateColor
+    text: {
+        if (!root.updatesLoaded) {
+            return "checking...";
+        }
+
+        if (root.updates.length === 0) {
+            return "ok";
+        }
+
+        return root.updates.length + " pkg";
+    }
 
     Poller {
         id: updateCheck
@@ -32,7 +40,6 @@ Chip {
         interval: 30 * 60 * 1000
         onValueChanged: {
             root.updates = value.length > 0 ? value.split("\n") : [];
-            root.updatesLoaded = true;
         }
     }
 
@@ -98,11 +105,7 @@ Chip {
                 }
 
                 Text {
-                    text: root.updatesLoaded
-                        ? root.updates.length === 0
-                            ? "Your system is up to date."
-                            : root.updates.length + " update" + (root.updates.length === 1 ? "" : "s") + " available"
-                        : "Checking for updates..."
+                    text: root.updatesLoaded ? root.updates.length === 0 ? "Your system is up to date." : root.updates.length + " update" + (root.updates.length === 1 ? "" : "s") + " available" : "Checking for updates..."
                     color: root.updateColor
                     font.family: Theme.fontFamily
                     font.pixelSize: 11
