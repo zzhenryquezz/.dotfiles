@@ -15,9 +15,9 @@ vim.cmd("set list")
 
 vim.cmd("set mouse=")
 
-vim.cmd("set spelllang=en_us,pt_br")
-vim.cmd("set spell")
-vim.cmd("set spellcapcheck=") -- Ignora partes de camelCase
-
-vim.opt.spelloptions:append("camel") -- Ignora partes de camelCase
-
+-- vim.cmd("set spelllang=en_us,pt_br")
+-- vim.cmd("set spell")
+-- vim.cmd("set spellcapcheck=") -- Ignora partes de camelCase
+--
+-- vim.opt.spelloptions:append("camel") -- Ignora partes de camelCase
+--

@@ -70,15 +70,15 @@ return {
                     enabled = true,
                     leave_dirs_open = true,
                 },
-                -- components = {
-                --     name = function(config, node, state)
-                --         local name = components.name(config, node, state)
-                --         if node:get_depth() == 1 then
-                --             name.text = vim.fs.basename(vim.loop.cwd() or "")
-                --         end
-                --         return name
-                --     end,
-                -- },
+                components = {
+                    name = function(config, node, state)
+                        local name = components.name(config, node, state)
+                        if node:get_depth() == 1 then
+                            name.text = vim.fs.basename(vim.loop.cwd() or "")
+                        end
+                        return name
+                    end,
+                },
                 filtered_items = {
                     hide_dotfiles = false,
                     visible = true,
@@ -88,7 +88,8 @@ return {
                         "$RECYCLE.BIN",
                         "System Volume Information",
                         "Recovery",
-                        "DumpStack.log.tmp"
+                        "DumpStack.log.tmp",
+                        ".Trash-1000"
                     },
                 },
             },
@@ -102,6 +103,7 @@ return {
             },
         })
 
-        vim.keymap.set("n", "<C-n>", ":Neotree reveal<CR>")
+        vim.keymap.set("n", "<leader>e", ":Neotree reveal<CR>")
+        vim.keymap.set("n", "<leader>E", ":Neotree position=current reveal<CR>")
     end,
 }
