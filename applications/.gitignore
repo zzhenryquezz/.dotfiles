@@ -1,3 +1,4 @@
 .local/share/applications/*
 !.local/share/applications/*.desktop
 .local/share/applications/_*
+*.cache
