@@ -1,11 +1,8 @@
 import Quickshell
 import QtQuick.Layouts
-import Quickshell.Io
-import Quickshell.Hyprland
 import QtQuick
-import Quickshell.Services.Mpris
 
-import "../config"
+import qs.config
 import qs.services
 
 PanelWindow {
@@ -13,6 +10,7 @@ PanelWindow {
     screen: Quickshell.screens[0]
     required property var modelData
     color: "transparent"
+    implicitHeight: 40
 
     anchors {
         top: true
@@ -27,24 +25,6 @@ PanelWindow {
         bottom: 0
     }
 
-    implicitHeight: 40
-
-    Audio {
-        id: audio
-    }
-
-    Network {
-        id: network
-    }
-
-    Cpu {
-        id: cpu
-    }
-
-    Memory {
-        id: memory
-    }
-
     RowLayout {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
@@ -54,9 +34,6 @@ PanelWindow {
             height: bar.implicitHeight
         }
 
-        Player {
-            height: bar.implicitHeight
-        }
 
         Submap {}
 
@@ -74,6 +51,10 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
 
+        Player {
+            height: bar.implicitHeight
+        }
+
         UpdateCheck {
             height: bar.implicitHeight
         }
@@ -81,6 +62,9 @@ PanelWindow {
         Docker {}
 
         Chip {
+            Audio {
+                id: audio
+            }
             icon: ""
             text: audio.volume + "%"
         }
@@ -90,18 +74,52 @@ PanelWindow {
         Chip {
             icon: ""
             textColor: network.connected ? Theme.success : Theme.danger
+
+            Network {
+                id: network
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    Quickshell.execDetached(["kitty", "--class", "popup-xl", "-e", "impala"]);
+                }
+            }
         }
 
         Chip {
             icon: ""
             text: cpu.usage.toString().padStart(2, "0") + "%"
             textColor: cpu.usage > 50 ? (cpu.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
+            Cpu {
+                id: cpu
+            }
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    Quickshell.execDetached(["kitty", "--class", "popup-xl", "--title=btop", "-e", "btop"]);
+                }
+            }
         }
 
         Chip {
             icon: ""
             text: memory.usage + "%"
             textColor: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
+
+            Memory {
+                id: memory
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    Quickshell.execDetached(["kitty", "--class", "popup-xl", "--title=btop", "-e", "btop", "-p", "1"]);
+                }
+            }
         }
     }
 }

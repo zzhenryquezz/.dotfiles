@@ -12,4 +12,5 @@ hl.window_rule({
     float = true,
     size = "1200 800",
     center = true,
+    stay_focused = true,
 })
