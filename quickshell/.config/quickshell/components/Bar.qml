@@ -78,6 +78,8 @@ PanelWindow {
             height: bar.implicitHeight
         }
 
+        Docker {}
+
         Chip {
             icon: ""
             text: audio.volume + "%"
@@ -101,6 +103,5 @@ PanelWindow {
             text: memory.usage + "%"
             textColor: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
         }
-
     }
 }
