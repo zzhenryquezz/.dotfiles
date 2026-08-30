@@ -17,7 +17,7 @@ selected=$(
         depth="${project##*=}"
         name="$(basename "$root")"
 
-        find "$root" \
+        find -L "$root" \
             -mindepth "$depth" \
             -maxdepth "$depth" \
             -type d \
