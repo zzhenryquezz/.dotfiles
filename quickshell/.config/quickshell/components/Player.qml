@@ -8,12 +8,15 @@ RowLayout {
     id: root
     visible: root.player !== undefined
     property int startIndex: 0
+    property int maxLength: 21
     readonly property var player: Mpris.players.values.find(p => p.isPlaying)
 
     Chip {
         id: chip
         icon: ""
         text: ""
+        maxLength: root.maxLength
+        implicitWidth: 260
     }
 
     Timer {
@@ -41,12 +44,23 @@ RowLayout {
             textColor = Theme.warning;
         }
 
-        let text = root.player.metadata["xesam:title"] + " - " + root.player.metadata["xesam:artist"].join(", ");
+        let fullText = root.player.metadata["xesam:title"] + " - " + root.player.metadata["xesam:artist"].join(", ");
+        let text = fullText;
+        let index = 0;
+        let maxLength = root.maxLength;
 
-        text = text.length > 30 ? text.substring(root.startIndex, root.startIndex + 30) + "..." : text;
 
-        root.startIndex = (root.startIndex + 1) % text.length;
+        if (text.length > maxLength) {
+            const separator = " | ";
+            const loop = text + separator + text;
 
+            text = loop.slice(root.startIndex, root.startIndex + maxLength);
+            // text = text.slice(root.startIndex, root.startIndex + maxLength);
+            // index = (root.startIndex + 1) % text.length;
+            index = (root.startIndex + 1) % (fullText.length + separator.length);
+        }
+
+        root.startIndex = index;
         chip.text = text;
         chip.icon = icon;
         chip.textColor = textColor;

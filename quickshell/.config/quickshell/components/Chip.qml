@@ -21,7 +21,9 @@ Rectangle {
 
     RowLayout {
         id: content
-        anchors.centerIn: parent
+        anchors.fill: parent
+        anchors.leftMargin: 16
+        anchors.rightMargin: 16
         spacing: 8
 
         Text {
@@ -34,7 +36,7 @@ Rectangle {
         Text {
             visible: root.text.length > 0
             text: root.text
-            Layout.preferredWidth: Math.min(root.maxLength * root.fontSize * 0.6, root.text.length * root.fontSize * 0.6)
+            Layout.preferredWidth: Math.min(root.maxLength * root.fontSize, root.text.length * root.fontSize * 0.6)
             elide: Text.ElideRight
             font.family: Theme.fontFamily
             font.pixelSize: root.fontSize
