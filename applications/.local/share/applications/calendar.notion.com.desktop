@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=calendar-notion
+Comment=calendar notion
+Exec=google-chrome-stable --profile-directory="Default"  --app=https://calendar.notion.so
+Terminal=false
+Type=Application
+Icon=notion
+Categories=Network;
