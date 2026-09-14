@@ -4,6 +4,7 @@ import QtQuick
 
 import qs.config
 import qs.services
+import qs.modules.WorkspaceBarNumber
 
 PanelWindow {
     id: bar
@@ -30,30 +31,35 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
 
-        Workspace {
-            height: bar.implicitHeight
+        WorkspaceBar {
+            rangeStart: 0
+            rangeEnd: 3
         }
-
-
-        Submap {}
 
         Pomo {
             id: pomodoro
         }
+
+        Player {}
+
+        Submap {}
     }
 
     Clock {
         anchors.centerIn: parent
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                Quickshell.execDetached(["gtk-launch", "--class", "popup-xl", "calendar.notion.com"]);
+            }
+        }
     }
 
     RowLayout {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
-
-        Player {
-            height: bar.implicitHeight
-        }
 
         UpdateCheck {
             height: bar.implicitHeight

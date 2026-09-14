@@ -2,6 +2,8 @@ import Quickshell
 import QtQuick.Layouts
 import qs.components
 
+import qs.modules.WorkspaceBarNumber
+
 Scope {
     Bar {}
     PanelWindow {
@@ -28,8 +30,9 @@ Scope {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 4
 
-            Workspace {
-                height: bar.implicitHeight
+            WorkspaceBar {
+                rangeStart: 5
+                rangeEnd: 9
             }
 
             Submap {}
