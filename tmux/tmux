@@ -291,7 +291,7 @@ tmux_project_command() {
 
   [ -z "$selected" ] && exit 0
 
-  exec "$root_dir/tmux/tmux" create $PROJECTS_DIR/$selected
+  exec "$root_dir/tmux/tmux" create $selected
 
 }
 
@@ -301,43 +301,51 @@ tmux_create_command() {
   # commands/create_command.sh
   #!/bin/bash
 
-  DIR=${args[dir]}
+  dir=${args[dir]}
+  name="$dir"
 
-  echo "Creating new tmux session for directory: $DIR"
-
-  SESSION_NAME=$(basename "$DIR")
+  # remove home directory from the name
+  # name=${name/#$HOME/~}
+  name="${name/#"$HOME"/\~}"
 
   # replace dots with underline
 
-  SESSION_NAME=${SESSION_NAME//./_}
+  name=${name//./_}
+
+  # replace slashes with underline
+  # name=${name//\//_}
+
+  echo "dir $dir"
+  echo "session name $name"
 
   # create session detached
-  tmux new-session -d -s "$SESSION_NAME" -c "$DIR"
+  tmux new-session -d -s "$name" -c "$dir"
 
   # rename the first window to "code"
-  tmux rename-window -t "$SESSION_NAME:0" "code"
+  tmux rename-window -t "$name:0" "code"
 
   # open nvim in the first window
-  tmux send-keys -t "$SESSION_NAME:0" "nvim" C-m
+  tmux send-keys -t "$name:0" "nvim" C-m
 
   # create a new window for ai tools
-  # tmux new-window -t "$SESSION_NAME" -n "ai" -c "$DIR"
+  # tmux new-window -t "$name" -n "ai" -c "$DIR"
 
   # open copilot chat in the ai window
-  # tmux send-keys -t "$SESSION_NAME:1" "copilot" C-m
+  # tmux send-keys -t "$name:1" "copilot" C-m
 
   # create a new window for running the code
-  tmux new-window -t "$SESSION_NAME" -n "run" -c "$DIR"
+  tmux new-window -t "$name" -n "run" -c "$dir"
 
   # select the first window
-  tmux select-window -t "$SESSION_NAME:0"
+  tmux select-window -t "$name:0"
 
-  # tmux attach -t "$SESSION_NAME"
+  # tmux attach -t "$name"
 
-  if [ "$SWITCH_CLIENT" = "1" ]; then
-      tmux switch-client -t "$SESSION_NAME"
+  # switch clinnt is enable or tmuux is defined, then switch client, else attach session
+  if [ "$SWITCH_CLIENT" = "1" ] || [ -n "$TMUX" ]; then
+      tmux switch-client -t "$name"
   else
-      tmux attach-session -t "$SESSION_NAME"
+      tmux attach-session -t "$name"
   fi
 
 }
