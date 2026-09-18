@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useTimelineItem } from '@renderer/composables/useTimelineItem';
-import { useSpring } from '@renderer/composables/useSpring';
-import { useTimeline } from '@renderer/composables/useTimeline';
+import { useTimelineItem } from '@renderer-vue/composables/useTimelineItem';
+import { useSpring } from '@renderer-vue/composables/useSpring';
+import { useTimeline } from '@renderer-vue/composables/useTimeline';
+import { cn } from '@renderer-vue/utils/cn';
 
 const item = useTimelineItem();
 const timeline = useTimeline()
@@ -13,8 +14,13 @@ const scale = useSpring({
 
 const x = computed(() => item.value.data.x || 0)
 const y = computed(() => item.value.data.y || 0)
-const width = computed(() => item.value.data.width || 100)
-const height = computed(() => item.value.data.height || 100)
+const width = computed(() => item.value.data.width || item.value.data.size || 100)
+const height = computed(() => item.value.data.height || item.value.data.size || 100)
+const imgClasses = computed(() => cn([
+    'size-full',
+    'object-contain',
+    item.value.data.class,
+]))
 
 const style = computed(() => ({
     left: `${timeline.value.data.width / 2 + x.value}px`,
@@ -25,8 +31,8 @@ const style = computed(() => ({
 }))
 </script>
 <template>
-    <div class="flex absolute size-100 items-center justify-center" :style>
-        <img v-if="src" :src="src" class="size-full object-contain" />
+    <div class="flex absolute size-100 items-center justify-center" :style data-studio-transform :data-studio-item-id="item.data.id">
+        <img v-if="src" :src="src" :class="imgClasses" />
         <div v-else class="flex flex-col items-center justify-center text-center gap-4 text-danger">
             <span>No image source provided</span>
         </div>
