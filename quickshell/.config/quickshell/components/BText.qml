@@ -1,7 +1,5 @@
-import QtQuick.Layouts
 import QtQuick
 
-import qs.services
 import qs.config
 
 Text {
