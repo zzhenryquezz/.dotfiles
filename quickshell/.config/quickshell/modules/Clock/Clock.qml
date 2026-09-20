@@ -1,8 +1,5 @@
-import Quickshell.Hyprland
 import QtQuick
-import QtQuick.Layouts
-
-import qs.config
+import Quickshell
 import qs.components
 
 Chip {
@@ -19,6 +16,14 @@ Chip {
         repeat: true
         onTriggered: {
             root.value = Qt.formatDateTime(new Date(), "dd ddd hh:mm:ss");
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        onClicked: {
+            Quickshell.execDetached(["gtk-launch", "--class", "popup-xl", "calendar.notion.com"]);
         }
     }
 }

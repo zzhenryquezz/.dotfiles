@@ -14,7 +14,7 @@ Scope {
     property string text: timer.text
     property string identifier: "session"
 
-    PomoTimer {
+    PomodoroTimer {
         id: timer
     }
 

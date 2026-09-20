@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell.Io
 
+import qs.components
+
 Chip {
     icon: "󰡨"
 

@@ -3,15 +3,20 @@ import QtQuick.Layouts
 import qs.components
 
 import qs.modules.WorkspaceBarNumber
+import qs.modules.Clock
+import qs.modules.Audio
+import qs.modules.Submap
 
 Scope {
     Bar {}
+
     PanelWindow {
         id: bar
         screen: Quickshell.screens[1]
         required property var modelData
         color: "transparent"
         implicitHeight: 38
+
         anchors {
             top: true
             left: true
@@ -32,7 +37,7 @@ Scope {
 
             WorkspaceBar {
                 rangeStart: 5
-                rangeEnd: 9
+                rangeEnd: 8
             }
 
             Submap {}
@@ -40,6 +45,14 @@ Scope {
 
         Clock {
             anchors.centerIn: parent
+        }
+
+        RowLayout {
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 4
+
+            Audio {}
         }
     }
 }

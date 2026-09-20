@@ -3,8 +3,18 @@ import QtQuick.Layouts
 import QtQuick
 
 import qs.config
-import qs.services
 import qs.modules.WorkspaceBarNumber
+import qs.modules.Clock
+import qs.modules.Memory
+import qs.modules.Cpu
+import qs.modules.Audio
+import qs.modules.Network
+import qs.modules.Keyboard
+import qs.modules.Pomodoro
+import qs.modules.Submap
+import qs.modules.Player
+import qs.modules.Updater
+import qs.modules.Docker
 
 PanelWindow {
     id: bar
@@ -33,12 +43,10 @@ PanelWindow {
 
         WorkspaceBar {
             rangeStart: 0
-            rangeEnd: 3
+            rangeEnd: 4
         }
 
-        Pomo {
-            id: pomodoro
-        }
+        Pomodoro {}
 
         Player {}
 
@@ -47,13 +55,6 @@ PanelWindow {
 
     Clock {
         anchors.centerIn: parent
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                Quickshell.execDetached(["gtk-launch", "--class", "popup-xl", "calendar.notion.com"]);
-            }
-        }
     }
 
     RowLayout {
@@ -61,71 +62,18 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
 
-        UpdateCheck {
-            height: bar.implicitHeight
-        }
+        Updater {}
 
         Docker {}
 
-        Chip {
-            Audio {
-                id: audio
-            }
-            icon: ""
-            text: audio.volume + "%"
-        }
+        Audio {}
 
         KeyboardLayout {}
 
-        Chip {
-            icon: ""
-            textColor: network.connected ? Theme.success : Theme.danger
+        Network {}
 
-            Network {
-                id: network
-            }
+        Cpu {}
 
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Quickshell.execDetached(["kitty", "--class", "popup-xl", "-e", "impala"]);
-                }
-            }
-        }
-
-        Chip {
-            icon: ""
-            text: cpu.usage.toString().padStart(2, "0") + "%"
-            textColor: cpu.usage > 50 ? (cpu.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
-            Cpu {
-                id: cpu
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Quickshell.execDetached(["kitty", "--class", "popup-xl", "--title=btop", "-e", "btop"]);
-                }
-            }
-        }
-
-        Chip {
-            icon: ""
-            text: memory.usage + "%"
-            textColor: memory.usage > 50 ? (memory.usage > 80 ? Theme.danger : Theme.warning) : Theme.success
-
-            Memory {
-                id: memory
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    Quickshell.execDetached(["kitty", "--class", "popup-xl", "--title=btop", "-e", "btop", "-p", "1"]);
-                }
-            }
-        }
+        Memory {}
     }
 }

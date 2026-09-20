@@ -7,6 +7,7 @@ import Quickshell.Services.Mpris
 
 import qs.services
 import qs.config
+import qs.components
 
 BarItem {
     id: root
@@ -17,11 +18,11 @@ BarItem {
     property string pomoColor: pomodoro.isRunning ? (pomodoro.isDue ? Theme.danger : Theme.success) : Theme.foreground
     property string textColor: pomodoro.isDue ? blickColor : pomoColor
 
-    Pomodoro {
+    PomodoroService {
         id: pomodoro
     }
 
-    PomoPanel {
+    PomodoroPanel {
         id: panel
         pomodoro: pomodoro
         x: root.x + 20

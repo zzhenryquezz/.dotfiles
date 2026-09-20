@@ -14,7 +14,7 @@ PanelWindow {
     screen: Quickshell.screens[0]
     color: "transparent"
 
-    property Pomodoro pomodoro: null
+    property PomodoroService pomodoro: null
     property Item anchorItem: null
     property string placement: "bottom"
     property int gap: 1

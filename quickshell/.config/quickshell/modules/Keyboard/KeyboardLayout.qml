@@ -1,10 +1,9 @@
-import Quickshell.Hyprland
 import QtQuick
 import Quickshell.Io
-import QtQuick.Layouts
 
 import qs.config
 import qs.services
+import qs.components
 
 Chip {
     text: keyboard.layoutDescriptionShort

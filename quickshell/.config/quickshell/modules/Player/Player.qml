@@ -3,6 +3,8 @@ import Quickshell.Services.Mpris
 import QtQuick.Layouts
 
 import qs.config
+import qs.components
+
 
 RowLayout {
     id: root

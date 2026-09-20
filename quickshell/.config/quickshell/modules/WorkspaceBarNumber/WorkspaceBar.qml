@@ -12,7 +12,6 @@ Rectangle {
     property int rangeStart: 0
     property int rangeEnd: 9
     implicitWidth: content.implicitWidth
-    implicitHeight: 36
     color: "transparent"
 
     RowLayout {
@@ -26,11 +25,9 @@ Rectangle {
             Chip {
                 id: ws
                 required property int index
-                property int id: rangeStart + index
+                property int id: root.rangeStart + index
                 property bool active: Hyprland.workspaces.values.some(w => w.id === ws.id + 1)
                 property bool focused: Hyprland.focusedWorkspace?.id === (ws.id + 1)
-                property bool first: ws.id === 0
-                property bool last: ws.id === (root.quantity - 1)
 
                 text: ws.id + 1
                 backgroundColor: ws.focused ? Theme.primary : Theme.background
@@ -45,7 +42,6 @@ Rectangle {
 
                     return Theme.foreground;
                 }
-                // backgroundColor: ws.focused ? Theme.primary : Theme.background
 
                 MouseArea {
                     anchors.fill: parent
