@@ -1,0 +1,9 @@
+export DOTFILES_DIR="path/to/your/dotfiles"
+
+# atlas workspace
+export PERSONAL_WORKSPACE="/home/user/personal"
+export WORK_WORKSPACE="/home/user/work"
+
+# tmux project directories to scan
+export TMUX_PROJECT_DIR="/home/user/git=3"
+export TMUX_PROJECT_DIR="$TMUX_PROJECT_DIR:/home/user/.config=1"

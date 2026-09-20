@@ -18,4 +18,6 @@ alias cat="bat"
 
 alias op="dot tmux project"
 alias tn="dot tmux create"
+alias ap="atlas -w $PERSONAL_WORKSPACE"
+alias aw="atlas -w $WORK_WORKSPACE"
 
