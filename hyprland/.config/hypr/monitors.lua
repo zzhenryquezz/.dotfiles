@@ -15,14 +15,14 @@ hl.monitor({
     scale  = 1,
 })
 
-for i = 1, 4 do
+for i = 1, 5 do
     hl.workspace_rule({
         workspace = tostring(i),
         monitor   = MONITOR_PRIMARY_ID
     })
 end
 
-for i = 5, 10 do
+for i = 6, 10 do
     hl.workspace_rule({
         workspace = tostring(i),
         monitor   = MONITOR_SECONDARY_ID

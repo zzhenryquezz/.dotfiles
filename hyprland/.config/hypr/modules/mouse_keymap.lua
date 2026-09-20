@@ -39,8 +39,35 @@ hl.define_submap("mouse", function()
         repeating = true
     })
 
+    --  mouse down 
+    hl.bind("v", hl.dsp.exec_cmd("ydotool click 0x40"), {
+        repeating = true
+    })
+
+    hl.bind("SHIFT + v", hl.dsp.exec_cmd("ydotool click 0x60"), {
+        repeating = true
+    })
+
     hl.bind("SHIFT + SPACE", hl.dsp.exec_cmd("ydotool click 0xc1"))
 
+    hl.bind("N", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y -1"), {
+        repeating = true
+    })
+
+    hl.bind("SHIFT + N", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y -10"), {
+        repeating = true
+    })
+
+    hl.bind("P", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y 1"), {
+        repeating = true
+    })
+
+    hl.bind("SHIFT + P", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y 10"), {
+        repeating = true
+    })
+
+
+    hl.bind("q", hl.dsp.submap("reset"))
     hl.bind("escape", hl.dsp.submap("reset"))
     hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("reset"))
 end)
