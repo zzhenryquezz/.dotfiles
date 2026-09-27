@@ -25,7 +25,7 @@ const style = computed(() => ({
 }))
 </script>
 <template>
-    <div class="flex absolute size-100 items-center justify-center" :style data-studio-transform
+    <div class="flex absolute items-center justify-center" :style data-studio-transform
         :data-studio-item-id="item.data.id">
         <div :class="classes">
             {{ text }}
