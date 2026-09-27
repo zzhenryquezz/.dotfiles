@@ -68,6 +68,5 @@ hl.define_submap("mouse", function()
 
 
     hl.bind("q", hl.dsp.submap("reset"))
-    hl.bind("escape", hl.dsp.submap("reset"))
     hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("reset"))
 end)

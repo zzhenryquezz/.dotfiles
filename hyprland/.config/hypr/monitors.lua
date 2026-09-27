@@ -5,13 +5,13 @@ hl.monitor({
     output   = MONITOR_PRIMARY_ID,
     mode     = "3840x2160@30",
     position = "0x0",
-    scale    = 1.33,
-    vrr      = 2
+    scale    = 1.5,
+    -- vrr      = 2
 })
 
 hl.monitor({
     output = MONITOR_SECONDARY_ID,
-    mode   = "1920x1080@60",
+    mode   = "1920x1080@30",
     scale  = 1,
 })
 
@@ -28,3 +28,12 @@ for i = 6, 10 do
         monitor   = MONITOR_SECONDARY_ID
     })
 end
+
+
+hl.config({
+    xwayland = {
+        -- force_zero_scaling = true
+    }
+})
+
+-- hl.env("GDK_SCALE", "2")

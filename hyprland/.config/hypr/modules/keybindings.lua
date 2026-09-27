@@ -98,6 +98,7 @@ end)
 hl.bind(MAIN_MOD .. " + A", hl.dsp.submap("apps"))
 
 hl.define_submap("apps", "reset", function()
+    hl.bind("C", hl.dsp.exec_cmd("hyprpicker | wl-copy"))
 
     hl.bind("S", hl.dsp.submap("spotify"))
 
