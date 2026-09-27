@@ -19,7 +19,7 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99
-
+vim.o.exrc = true
 -- vim.cmd("set spelllang=en_us,pt_br")
 -- vim.cmd("set spell")
 -- vim.cmd("set spellcapcheck=") -- Ignora partes de camelCase
