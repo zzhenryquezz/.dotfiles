@@ -9,7 +9,10 @@ Rectangle {
     id: root
     property string text: ""
     property string icon: ""
+    property string imageSource: ""
+
     property int fontSize: 16
+    property int imageSize: 20
     property string textColor: Theme.foreground
     property string backgroundColor: Theme.background
     property int maxLength: 20
@@ -25,6 +28,14 @@ Rectangle {
         anchors.leftMargin: 16
         anchors.rightMargin: 16
         spacing: 8
+
+        Image {
+            visible: root.imageSource.length > 0
+            source: root.imageSource
+            fillMode: Image.PreserveAspectFit
+            Layout.preferredWidth: root.imageSize
+            Layout.preferredHeight: root.imageSize
+        }
 
         Text {
             visible: root.icon.length > 0

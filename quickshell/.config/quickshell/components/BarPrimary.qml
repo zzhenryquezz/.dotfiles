@@ -15,6 +15,7 @@ import qs.modules.Submap
 import qs.modules.Player
 import qs.modules.Updater
 import qs.modules.Docker
+import qs.modules.Tray
 
 PanelWindow {
     id: bar
@@ -60,6 +61,10 @@ PanelWindow {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         spacing: 4
+
+        TrayBar {
+            bar: bar
+        }
 
         Updater {}
 
