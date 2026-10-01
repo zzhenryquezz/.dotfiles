@@ -19,6 +19,7 @@ return {
             "yaml",
             "bash",
             "markdown",
+            "markdown_inline",
             "vue"
         }
 
@@ -28,6 +29,20 @@ return {
             callback = function(args)
                 pcall(vim.treesitter.start, args.buf)
             end,
+        })
+
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "markdown",
+            callback = function(args)
+                vim.api.nvim_buf_call(args.buf, function()
+                    vim.fn.matchadd("MarkdownDirective", "^\\s*:::\\w\\+")
+                    vim.fn.matchadd("MarkdownDirective", "^\\s*:::$")
+                end)
+            end,
+        })
+
+        vim.api.nvim_set_hl(0, "MarkdownDirective", {
+            link = "Keyword",
         })
     end,
 }
