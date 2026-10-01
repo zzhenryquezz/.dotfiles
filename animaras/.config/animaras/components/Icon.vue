@@ -27,11 +27,18 @@ const style = computed(() => ({
 }))
 </script>
 <template>
-    <div class="flex absolute items-center justify-center" :style data-studio-transform
-        :data-studio-item-id="item.data.id">
-        <Icon :icon="name" :class="classes">
-            {{ text }}
-        </Icon>
-    </div>
+  <div
+    class="flex absolute items-center justify-center"
+    :style
+    data-studio-transform
+    :data-studio-item-id="item.data.id"
+  >
+    <Icon
+      :icon="name"
+      :class="classes"
+    >
+      {{ text }}
+    </Icon>
+  </div>
 </template>
 
