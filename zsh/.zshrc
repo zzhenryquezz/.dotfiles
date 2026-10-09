@@ -96,3 +96,6 @@ bindkey  "^[[F"   end-of-line
 bindkey  "^[[3~"  delete-char
 
 eval "$(zoxide init zsh)"
+
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH
