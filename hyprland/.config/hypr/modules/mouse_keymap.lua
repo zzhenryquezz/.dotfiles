@@ -2,7 +2,32 @@
 --
 hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("mouse"))
 
+hl.define_submap("scroll", function()
+    hl.bind("J", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y -1"), {
+        repeating = true
+    })
+
+    hl.bind("DOWN", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y -1"), {
+        repeating = true
+    })
+
+    hl.bind("K", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y 1"), {
+        repeating = true
+    })
+
+    hl.bind("UP", hl.dsp.exec_cmd("ydotool mousemove -w -x 0 -y 1"), {
+        repeating = true
+    })
+
+    hl.bind("q", hl.dsp.submap("reset"))
+
+    hl.bind(MAIN_MOD .. " + M", hl.dsp.submap("reset"))
+end)
+
 hl.define_submap("mouse", function()
+
+    hl.bind("S", hl.dsp.submap("scroll"))
+
     hl.bind("h", hl.dsp.exec_cmd("ydotool mousemove -x -10 -y 0"), {
         repeating = true
     })
