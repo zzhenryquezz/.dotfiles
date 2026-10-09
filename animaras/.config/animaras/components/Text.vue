@@ -14,9 +14,10 @@ const scale = useSpring({
 
 const x = computed(() => item.value.data.x || 0)
 const y = computed(() => item.value.data.y || 0)
-const classes = computed(() => cn([
+const classes = computed(() => cn(
+    'w-max',
     item.value.data.class,
-]))
+))
 
 const style = computed(() => ({
     left: `${timeline.value.data.width / 2 + x.value}px`,
@@ -25,10 +26,14 @@ const style = computed(() => ({
 }))
 </script>
 <template>
-    <div class="flex absolute items-center justify-center" :style data-studio-transform
-        :data-studio-item-id="item.data.id">
-        <div :class="classes">
-            {{ text }}
-        </div>
+  <div
+    class="flex absolute items-center justify-center"
+    :style
+    data-studio-transform
+    :data-studio-item-id="item.data.id"
+  >
+    <div :class="classes">
+      {{ text }}
     </div>
+  </div>
 </template>
