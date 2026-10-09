@@ -13,7 +13,7 @@ Chip {
 
     Poller {
         id: poller
-        command: "iwctl station wlan0 show | grep 'Connected network' | awk '{if ($3) print \"connected\"; else print \"not connected\"}'"
+        command: "iwctl station list | grep wlan | awk '{print $3}'"
         interval: 1000
     }
 
