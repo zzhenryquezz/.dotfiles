@@ -28,13 +28,14 @@ BarItem {
         x: root.x + 20
         visible: false
         function updateVisibility() {
-            if (hoverHandler.hovered || hovered) {
+            if (keepOpen || hoverHandler.hovered || hovered) {
                 visible = true;
                 hideTimer.stop();
             } else {
                 hideTimer.restart();
             }
         }
+        onKeepOpenChanged: updateVisibility()
         onHoveredChanged: updateVisibility()
     }
 
@@ -60,7 +61,7 @@ BarItem {
         repeat: false
 
         onTriggered: {
-            if (!root.hovered && !panel.hovered)
+            if (!panel.keepOpen && !root.hovered && !panel.hovered)
                 panel.visible = false;
         }
     }

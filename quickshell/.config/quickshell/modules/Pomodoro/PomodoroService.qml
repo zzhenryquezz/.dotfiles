@@ -6,6 +6,8 @@ Scope {
 
     property int sessionDuration: 25
     property int breakDuration: 5
+    readonly property int cycleCount: 4
+    property int currentCycle: 1
 
     property bool isRunning: timer.isRunning
     property bool isDue: timer.isRunning && timer.remainingTime <= 0
@@ -24,6 +26,10 @@ Scope {
 
     function start() {
         timer.start();
+    }
+
+    function selectCycle(cycle) {
+        root.currentCycle = Math.max(1, Math.min(root.cycleCount, cycle));
     }
 
     function toggleMode() {

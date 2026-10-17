@@ -22,8 +22,9 @@ PanelWindow {
     property real y: 0
 
     property bool hovered: false
+    property bool keepOpen: false
 
-    readonly property int contentWidth: Math.max(header.implicitWidth, timeText.implicitWidth, feedbackText.implicitWidth, controls.buttonWidth * 2 + controls.spacing)
+    readonly property int contentWidth: Math.max(header.implicitWidth, timeText.implicitWidth, feedbackText.implicitWidth, cycleSelector.implicitWidth, controls.buttonWidth * 2 + controls.spacing)
     readonly property bool hasPomodoro: root.pomodoro !== null
     readonly property bool isBreak: root.hasPomodoro && root.pomodoro.identifier === "break"
     readonly property int phaseDuration: root.hasPomodoro ? (root.isBreak ? root.pomodoro.breakDuration : root.pomodoro.sessionDuration) * 60 : 0
@@ -69,7 +70,7 @@ PanelWindow {
                     spacing: 2
 
                     Text {
-                        text: root.isBreak ? "󰅶  Break" : "󰔟  Focus"
+                        text: root.isBreak ? "󰅶 Break" : "󰔟 Focus"
                         color: Theme.foreground
                         font.family: Theme.fontFamily
                         font.pixelSize: 16
@@ -82,6 +83,31 @@ PanelWindow {
                         opacity: 0.65
                         font.family: Theme.fontFamily
                         font.pixelSize: 11
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                Rectangle {
+                    implicitWidth: 24
+                    implicitHeight: 24
+                    color: root.keepOpen ? root.phaseColor : Theme.border
+                    radius: Theme.radius
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "󰐃"
+                        color: root.keepOpen ? Theme.primaryForeground : Theme.foreground
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 13
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.keepOpen = !root.keepOpen
                     }
                 }
             }
@@ -124,6 +150,42 @@ PanelWindow {
                 font.family: Theme.fontFamily
                 font.pixelSize: 11
                 wrapMode: Text.NoWrap
+            }
+
+            RowLayout {
+                id: cycleSelector
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 12
+
+                Repeater {
+                    model: root.hasPomodoro ? root.pomodoro.cycleCount : 4
+
+                    delegate: Rectangle {
+                        required property int index
+
+                        implicitWidth: 24
+                        implicitHeight: 24
+                        color: root.hasPomodoro && root.pomodoro.currentCycle === index + 1 ? root.phaseColor : Theme.border
+                        radius: Theme.radius
+                        opacity: root.hasPomodoro ? 1 : 0.5
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: index + 1
+                            color: root.hasPomodoro && root.pomodoro.currentCycle === index + 1 ? Theme.primaryForeground : Theme.foreground
+                            font.family: Theme.fontFamily
+                            font.pixelSize: 11
+                            font.weight: Font.DemiBold
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            enabled: root.hasPomodoro
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: root.pomodoro.selectCycle(index + 1)
+                        }
+                    }
+                }
             }
 
             RowLayout {
