@@ -6,7 +6,7 @@ import qs.services
 import qs.components
 
 Chip {
-    icon: ""
+    icon: "󰍛"
     text: usage + "%"
     textColor: usage > 50 ? (usage > 80 ? Theme.danger : Theme.warning) : Theme.success
 
