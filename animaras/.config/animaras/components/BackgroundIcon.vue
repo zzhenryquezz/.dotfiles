@@ -92,4 +92,3 @@ const classes = cn(
     </template>
   </div>
 </template>
-```
