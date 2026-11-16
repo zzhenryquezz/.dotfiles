@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Walletio
+Comment=Notion Web App
+Exec=/home/rick/apps/walletio-linux-x64/walletio
+Terminal=false
+Type=Application
+Icon=/home/rick/apps/walletio-linux-x64/resources/files/icon.png
+Categories=Network;

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=x.com
+Comment=x.com site
+Exec=google-chrome-stable --use-angle=vulkan --ignore-gpu-blocklist --profile-directory="Default" --app=https://x.com
+Terminal=false
+Type=Application
+Icon=bi--twitter-x
+Categories=Network;

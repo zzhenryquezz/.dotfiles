@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=jukebox
+Comment=jukebox app shortcut
+Exec=google-chrome-stable --profile-directory="Default"  --app=http://localhost:9007
+Terminal=false
+Type=Application
+Icon=docker
+Categories=Network;
+
