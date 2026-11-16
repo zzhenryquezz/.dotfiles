@@ -24,3 +24,4 @@ hl.layer_rule({
 hl.bind(MAIN_MOD .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
 hl.bind(MAIN_MOD .. " + R", hl.dsp.exec_cmd("vicinae vicinae://launch/system/run"))
 hl.bind(MAIN_MOD .. " + C", hl.dsp.exec_cmd("vicinae vicinae://launch/clipboard/history"))
+hl.bind(MAIN_MOD .. " + PERIOD", hl.dsp.exec_cmd("vicinae vicinae://launch/core/search-emojis"))
