@@ -33,14 +33,28 @@ return {
 
         vim.api.nvim_create_autocmd("FileType", {
             pattern = "markdown",
+            callback = function()
+                vim.cmd([[
+            syntax region MarkdownDirectiveContent
+                \ start=/^\s*:::\w\+.*$/
+                \ end=/^\s*:::$/
+                \ contains=NONE
+        ]])
+            end,
+        })
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "markdown",
             callback = function(args)
                 vim.api.nvim_buf_call(args.buf, function()
                     vim.fn.matchadd("MarkdownDirective", "^\\s*:::\\w\\+")
                     vim.fn.matchadd("MarkdownDirective", "^\\s*:::$")
+
+                    vim.fn.matchadd("MarkdownContent", "^\\s*:::\\w\\+\\s\\zs.*")
                 end)
             end,
         })
 
+        vim.api.nvim_set_hl(0, "MarkdownDirectiveContent", { link = "Comment" })
         vim.api.nvim_set_hl(0, "MarkdownDirective", {
             link = "Keyword",
         })
