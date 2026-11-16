@@ -4,6 +4,7 @@ import Quickshell.Io
 import Quickshell.Hyprland
 import QtQuick
 import Quickshell.Services.Mpris
+import QtMultimedia
 
 import qs.services
 import qs.config
@@ -18,8 +19,22 @@ BarItem {
     property string pomoColor: pomodoro.isRunning ? (pomodoro.isDue ? Theme.danger : Theme.success) : Theme.foreground
     property string textColor: pomodoro.isDue ? blickColor : pomoColor
 
+    SoundEffect {
+        id: alarm
+        loops: SoundEffect.Infinite
+        source: "file:///usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
+        volume: 0.5
+    }
+
     PomodoroService {
         id: pomodoro
+        onIsDueChanged: {
+            if (pomodoro.isDue) {
+                alarm.play();
+            } else {
+                alarm.stop();
+            }
+        }
     }
 
     PomodoroPanel {
@@ -41,8 +56,8 @@ BarItem {
 
     Timer {
         interval: 1000
-        running: pomodoro.isDue
         repeat: true
+        running: pomodoro.isDue
         onTriggered: {
             root.blickColor = root.blickColor == Theme.danger ? Theme.foreground : Theme.danger;
         }

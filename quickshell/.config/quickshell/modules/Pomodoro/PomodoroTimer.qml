@@ -9,6 +9,7 @@ Scope {
     property int durationInMilliseconds: 0
     property int interval: 5
     property bool isRunning: false
+    property bool isDue: root.isRunning && root.remainingTime <= 0
 
     property int remainingTime: 0
     property string text: "00:00"

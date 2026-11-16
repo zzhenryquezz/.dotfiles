@@ -5,7 +5,7 @@ Scope {
     id: root
 
     property int sessionDuration: 25
-    property int breakDuration: 5
+    property int breakDuration: 1
     readonly property int cycleCount: 4
     property int currentCycle: 1
 
